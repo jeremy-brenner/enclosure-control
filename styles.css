@@ -79,7 +79,7 @@ body {
 }
 
 .cube.spin {
-    animation: spin 10s linear infinite;
+    animation: spin 40s linear infinite;
 }
 
 .cube .face {
