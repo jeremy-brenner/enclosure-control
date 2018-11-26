@@ -62,7 +62,9 @@ body {
 
 .button svg {
   fill: rgba(24,38,58);
-  padding: 2vh;
+  padding: 10%;
+  width: 80%;
+  height: 80%;
 }
 
 .cube {
