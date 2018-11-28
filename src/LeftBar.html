@@ -1,8 +1,8 @@
 <div id="left-bar">
-  <PowerButton icon={lightBulbIcon}/>
-  <PowerButton icon={fanIcon}/>
-  <PowerButton icon={printerIcon}/>
-  <PowerButton icon={skullIcon}/>
+  <PowerButton bind:power=$lightPower icon={lightBulbIcon}/>
+  <PowerButton bind:power=$fanPower icon={fanIcon}/>
+  <PowerButton bind:power=$printerPower icon={printerIcon}/>
+  <PowerButton bind:power=skullPower icon={skullIcon}/>
 </div>
     
 <script>
@@ -11,16 +11,38 @@
   import FanIcon from './icons/FanIcon.html';
   import PrinterIcon from './icons/PrinterIcon.html';
   import SkullIcon from './icons/SkullIcon.html';
+  import { Store } from 'svelte/store.js';
+
+  const store = new Store({
+    lightPower: "off",
+    fanPower: "off",
+    printerPower: "on",
+  });
 
   export default {
     components: { PowerButton },
-      data() {
-        return {
-          lightBulbIcon: LightBulbIcon,
-          fanIcon: FanIcon,
-          printerIcon: PrinterIcon,
-          skullIcon: SkullIcon,
+    store: () => store,
+    data() {
+      return {
+        lightBulbIcon: LightBulbIcon,
+        fanIcon: FanIcon,
+        printerIcon: PrinterIcon,
+        skullIcon: SkullIcon,
+        skullPower: "off"
       }
-    }
+    },
+    oncreate() {
+		  const listener = this.on('state', ({current,changed}) => {
+        if(changed.skullPower === true) {
+          store.set({
+            lightPower: "off",
+            fanPower: "off",
+            printerPower: "off"
+          });
+          this.set({skullPower:"off"});
+        }
+      });
+			this.on('destroy', listener.cancel);
+		}
   };
 </script>      
