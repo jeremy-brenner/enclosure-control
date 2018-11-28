@@ -12,13 +12,13 @@ const requestConfig = {
 loop();
 
 function loop() {
-  update()
+  updateAll()
     .then(wait)
     .then(loop);
 }
 
-function update() {
-  return Promise.all([getPrinterState(), getJobState() ]);
+function updateAll() {
+  return Promise.all([updatePrinterState(), updateJobState() ]);
 }
 
 function wait() {
@@ -27,7 +27,7 @@ function wait() {
   });
 }
 
-function getPrinterState() {
+function updatePrinterState() {
   return fetch(`${conf.octoprint.host}/api/printer`, requestConfig)
     .then(res => res.json())
     .then(data => {
@@ -35,7 +35,7 @@ function getPrinterState() {
     });
 }
 
-function getJobState() {
+function updateJobState() {
   return fetch(`${conf.octoprint.host}/api/job`, requestConfig)
     .then(res => res.json())
     .then(data => {
