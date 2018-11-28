@@ -7,8 +7,8 @@
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
     "dev": "run-p start:dev autobuild",
-    "start": "node index.js",
-    "start:dev": "node index.js"
+    "start": "sirv public",
+    "start:dev": "sirv public --dev"
   },
   "author": "",
   "license": "ISC",
@@ -19,9 +19,7 @@
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-svelte": "^4.4.0",
     "rollup-plugin-terser": "^3.0.0",
+    "sirv-cli": "^0.2.3",
     "svelte": "^2.15.3"
-  },
-  "dependencies": {
-    "express": "^4.16.4"
   }
 }
