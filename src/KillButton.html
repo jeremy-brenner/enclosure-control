@@ -1,3 +1,23 @@
-<div class='power-button' on:click="$killPower()">
+<div class='power-button' on:click="set({showDialog:true})">
   <slot></slot>
 </div>
+
+{#if showDialog}
+  <KillDialog bind:showDialog/>
+{/if}
+
+
+<script>
+    import KillDialog from './KillDialog.html';
+         
+    export default {
+      data: () => {
+        return {
+          showDialog: false
+        }
+      },
+      components: { KillDialog },
+    }
+</script>
+        
+        

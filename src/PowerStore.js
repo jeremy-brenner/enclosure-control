@@ -9,4 +9,8 @@ class PowerStore extends Store {
   }
 }
 
-export default PowerStore;
+export default new PowerStore({
+  lightPower: false,
+  fanPower: false,
+  printerPower: true,
+});

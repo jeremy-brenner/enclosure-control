@@ -1,0 +1,64 @@
+<div id='kill-dialog'>
+    <div class='message'>
+      Kill all power?
+      <SkullIcon/>
+    </div>
+    <div class='button' on:click="close(false)">Nope</div>
+    <div class='button' on:click="close(true)">Sure</div>
+</div>
+
+<style>
+  #kill-dialog {
+      position: fixed;
+      width: 90%;
+      height: 90%;
+      top: 5%;
+      left: 5%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      font-size: 10vh;
+      background: rgba(44,58,78,0.6);
+      box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+  }
+
+  #kill-dialog .message {
+    color: rgb(83, 17, 17);
+    text-align: center;
+    height: 80%; 
+    flex: 0 1 100%;
+  }
+
+  #kill-dialog .message :global(svg) {
+    fill: rgb(83, 17, 17);
+    width: 100%;
+    height: 80%;
+  }
+
+  #kill-dialog .button {
+    box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+    background: rgba(44,58,78,0.8);
+    color: rgba(24,38,58);
+    height: 20%; 
+    flex: 0 1 50%;
+  }
+
+</style>
+
+<script>
+  import store from './PowerStore.js';
+  import SkullIcon from './icons/SkullIcon.html'
+
+  export default {
+    store: () => store,
+    components: { SkullIcon },
+    methods: {
+      close(kill) {
+        if(kill===true){ 
+          store.killPower();
+        }
+        this.set({showDialog:false});
+      }
+    }
+  };
+</script>
