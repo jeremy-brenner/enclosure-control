@@ -47,11 +47,12 @@
 
 <script>
   import store from './PowerStore.js';
-  import SkullIcon from './icons/SkullIcon.html'
 
   export default {
     store: () => store,
-    components: { SkullIcon },
+    components: { 
+      SkullIcon: './icons/SkullIcon.html'
+    },
     methods: {
       close(kill) {
         if(kill===true){ 
