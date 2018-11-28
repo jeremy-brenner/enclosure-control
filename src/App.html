@@ -1,43 +1,13 @@
-<div id="perspective">
-  <div id="pane">
-    <div class="cube spin">
-      <div class="face front"></div>
-      <div class="face back"></div>
-      <div class="face top"></div>
-      <div class="face bottom"></div>
-      <div class="face left"></div>
-      <div class="face right"></div>
-    </div>
-  </div>
-</div>
-<div id="interface">
-  <PowerButton icon={lightBulbIcon}/>
-  <PowerButton icon={fanIcon}/>
-  <PowerButton icon={printerIcon}/>
-  <PowerButton icon={skullIcon}/>
-</div>
+<Cube/>
+<LeftBar/>
 
-<style>
-
-
-</style>
 
 <script>
-  import PowerButton from './PowerButton.html';
-  import LightBulbIcon from './LightBulbIcon.html';
-  import FanIcon from './FanIcon.html';
-  import PrinterIcon from './PrinterIcon.html';
-  import SkullIcon from './SkullIcon.html';
+  import LeftBar from './LeftBar.html';
+  import Cube from './Cube.html';
 
   export default {
-    components: { PowerButton },
-    data() {
-      return {
-        lightBulbIcon: LightBulbIcon,
-        fanIcon: FanIcon,
-        printerIcon: PrinterIcon,
-        skullIcon: SkullIcon,
-      }
-    }
-  };
-</script>      
+    components: { LeftBar, Cube },
+  }
+</script>
+

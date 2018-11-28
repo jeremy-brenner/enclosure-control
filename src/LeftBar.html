@@ -1,0 +1,26 @@
+<div id="left-bar">
+  <PowerButton icon={lightBulbIcon}/>
+  <PowerButton icon={fanIcon}/>
+  <PowerButton icon={printerIcon}/>
+  <PowerButton icon={skullIcon}/>
+</div>
+    
+<script>
+  import PowerButton from './PowerButton.html';
+  import LightBulbIcon from './icons/LightBulbIcon.html';
+  import FanIcon from './icons/FanIcon.html';
+  import PrinterIcon from './icons/PrinterIcon.html';
+  import SkullIcon from './icons/SkullIcon.html';
+
+  export default {
+    components: { PowerButton },
+      data() {
+        return {
+          lightBulbIcon: LightBulbIcon,
+          fanIcon: FanIcon,
+          printerIcon: PrinterIcon,
+          skullIcon: SkullIcon,
+      }
+    }
+  };
+</script>      
