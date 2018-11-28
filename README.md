@@ -1,12 +1,12 @@
 # enclosure-control
 
 /etc/lightdm/lightdm.conf
-xserver-command=X -nocursor
+xserver-command=X -s 0 -dpms -nocursor
 
 ~/.config/lxsession/LXDE-pi/autostart 
 @xset s noblank
 @xset s off
-@xset –dpms
+@xset -dpms
 @chromium-browser --disable-session-crashed-bubble --kiosk http://localhost:3000
 
 
