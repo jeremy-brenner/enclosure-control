@@ -1,15 +1,40 @@
 <div id='kill-dialog'>
+  <div id='dialog-box'>
     <div class='message'>
       Kill all power?
       <SkullIcon/>
     </div>
     <div class='button' on:click="close(false)">Nope</div>
     <div class='button' on:click="close(true)">Sure</div>
+  </div>
 </div>
 
 <style>
+
+  @keyframes pulse {
+    0% {
+      filter: brightness(50%);
+    }
+    50% {
+      filter: brightness(100%);
+    }
+    100% {
+      filter: brightness(50%);
+    }
+  }
+
   #kill-dialog {
       position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(184,34,2,0.5);
+      animation: pulse 5s linear infinite
+  }
+
+  #kill-dialog #dialog-box {
+      position: absolute;
       width: 90%;
       height: 90%;
       top: 5%;
@@ -18,24 +43,24 @@
       flex-direction: row;
       flex-wrap: wrap;
       font-size: 10vh;
-      background: rgba(44,58,78,0.6);
+      background: rgba(44,58,78,0.9);
       box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
   }
 
-  #kill-dialog .message {
+  #kill-dialog #dialog-box .message {
     color: rgb(83, 17, 17);
     text-align: center;
     height: 80%; 
     flex: 0 1 100%;
   }
 
-  #kill-dialog .message :global(svg) {
+  #kill-dialog #dialog-box .message :global(svg) {
     fill: rgb(83, 17, 17);
     width: 100%;
     height: 80%;
   }
 
-  #kill-dialog .button {
+  #kill-dialog #dialog-box .button {
     box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
     background: rgba(44,58,78,0.8);
     color: rgba(24,38,58);
