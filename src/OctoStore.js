@@ -4,6 +4,12 @@ class OctoStore extends Store {
 
 }
 
-export default new OctoStore({
+const store = new OctoStore({
 
 });
+
+store.on('state', (blah) => {
+  console.log(blah);
+})
+
+export default store
