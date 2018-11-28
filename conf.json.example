@@ -1,0 +1,6 @@
+{
+  "octoprint": {
+    "host": "http://localhost:port",
+    "key": "ABC123"
+  }
+}

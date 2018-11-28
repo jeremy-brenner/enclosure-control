@@ -2,3 +2,4 @@ node_modules
 iran
 npm-debug.log
 public/bundle.*
+conf.json

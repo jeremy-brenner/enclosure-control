@@ -1,12 +1,34 @@
 <Cube/>
-<PowerBar/>
+<div id=app>
+  <PowerBar/>
+  <div>
+    { $printerState }
+  </div>
+</div>
+
+<style>
+  #app {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+</style>
 
 <script>
+  import octoStore from './OctoStore.js'
+  import octoConnection from './OctoConnection.js'
+
   export default {
+    store: () => octoStore,
     components: { 
       PowerBar: './PowerBar.html', 
       Cube: './Cube.html'
-    },
+    }
   }
 </script>
 
