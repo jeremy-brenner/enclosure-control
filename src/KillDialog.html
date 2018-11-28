@@ -4,8 +4,12 @@
       Kill all power?
       <SkullIcon/>
     </div>
-    <div class='button' on:click="close(false)">Nope</div>
-    <div class='button' on:click="close(true)">Sure</div>
+    <div class='button' on:click="close(false)">
+      <CancelIcon/>
+    </div>
+    <div class='button' on:click="close(true)">
+      <CheckMarkIcon/>
+    </div>
   </div>
 </div>
 
@@ -68,6 +72,14 @@
     flex: 0 1 50%;
   }
 
+  #kill-dialog #dialog-box .button :global(svg) {
+    position: relative;
+    fill: rgba(24,38,58);
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+  }
 </style>
 
 <script>
@@ -76,7 +88,9 @@
   export default {
     store: () => store,
     components: { 
-      SkullIcon: './icons/SkullIcon.html'
+      SkullIcon: './icons/SkullIcon.html',
+      CancelIcon: './icons/CancelIcon.html',
+      CheckMarkIcon: './icons/CheckMarkIcon.html',
     },
     methods: {
       close(kill) {
