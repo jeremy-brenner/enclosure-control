@@ -31,18 +31,15 @@
         skullPower: "off"
       }
     },
-    oncreate() {
-		  const listener = this.on('state', ({current,changed}) => {
-        if(changed.skullPower === true) {
-          store.set({
-            lightPower: "off",
-            fanPower: "off",
-            printerPower: "off"
-          });
-          this.set({skullPower:"off"});
-        }
-      });
-			this.on('destroy', listener.cancel);
-		}
+    onstate({changed}) {
+      if(changed.skullPower === true) {
+        store.set({
+          lightPower: "off",
+          fanPower: "off",
+          printerPower: "off"
+        });
+        this.set({skullPower:"off"});
+      }
+    }
   };
 </script>      
