@@ -1,8 +1,16 @@
 <div id="power-bar">
-  <PowerButton bind:power=$lightPower icon={lightBulbIcon}/>
-  <PowerButton bind:power=$fanPower icon={fanIcon}/>
-  <PowerButton bind:power=$printerPower icon={printerIcon}/>
-  <PowerButton bind:power=skullPower icon={skullIcon}/>
+  <PowerButton bind:power=$lightPower>
+    <LightBulbIcon/>
+  </PowerButton>
+  <PowerButton bind:power=$fanPower>
+    <FanIcon/>
+  </PowerButton>
+  <PowerButton bind:power=$printerPower>
+    <PrinterIcon/>
+  </PowerButton>
+  <PowerButton bind:power=skullPower>
+    <SkullIcon/>
+  </PowerButton>
 </div>
     
 <script>
@@ -20,14 +28,16 @@
   });
 
   export default {
-    components: { PowerButton },
+    components: {
+      PowerButton, 
+      LightBulbIcon, 
+      FanIcon, 
+      PrinterIcon, 
+      SkullIcon 
+    },
     store: () => store,
     data() {
       return {
-        lightBulbIcon: LightBulbIcon,
-        fanIcon: FanIcon,
-        printerIcon: PrinterIcon,
-        skullIcon: SkullIcon,
         skullPower: "off"
       }
     },
