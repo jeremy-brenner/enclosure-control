@@ -1,11 +1,11 @@
 <div id="power-bar">
-  <PowerButton bind:power=$lightPower>
+  <PowerButton id='lightPower' bind:power=$lightPower>
     <LightBulbIcon/>
   </PowerButton>
-  <PowerButton bind:power=$fanPower>
+  <PowerButton id='fanPower' bind:power=$fanPower>
     <FanIcon/>
   </PowerButton>
-  <PowerButton bind:power=$printerPower>
+  <PowerButton id='printerPower' bind:power=$printerPower>
     <PrinterIcon/>
   </PowerButton>
   <KillButton>

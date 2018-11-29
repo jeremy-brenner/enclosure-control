@@ -1,16 +1,41 @@
 import { Store } from 'svelte/store.js';
+import { getOutputStates, setOutputState } from './OctoConnection.js';
+
+const statusMap = {
+  1: 'printerPower',
+  2: 'lightPower',
+  3: 'fanPower'
+}
+
+const idMap = {
+  printerPower: 1,
+  lightPower: 2,
+  fanPower: 3
+}
 
 class PowerStore extends Store {
   keys() {
     return Object.keys(this.get());
   }
   killPower() {
-    this.keys().forEach(key => this.set({[key]:false}));
+    Promise.all( this.keys().map(key => setOutputState(key, false)) )
+      .then( () => this.updateStates() );;
+  }
+  toggle(key) {
+    setOutputState(key, !this.get()[key])
+      .then( () => this.updateStates() );
+  }
+  updateStates() {
+    getOutputStates().then( states => this.set(states) );
   }
 }
 
-export default new PowerStore({
+const powerStore = new PowerStore({
   lightPower: false,
   fanPower: false,
-  printerPower: true,
+  printerPower: false,
 });
+
+powerStore.updateStates();
+
+export default powerStore;

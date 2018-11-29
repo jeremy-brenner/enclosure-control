@@ -1,4 +1,4 @@
-<div class='power-button' class:on="power" on:click="set({power:!power})">
+<div class='power-button' class:on="power" on:click="clicked()">
   <slot></slot>
 </div>
 
@@ -6,7 +6,7 @@
   export default {
     methods: {
       clicked() {
-        this.set({power: this.get().power == "on" ? "off" : "on"});
+        this.store.toggle(this.get().id);
       }
     }
   };
