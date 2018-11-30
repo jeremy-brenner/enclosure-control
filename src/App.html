@@ -1,9 +1,6 @@
 <Cube/>
 <div id=app>
   <PowerBar/>
-  <div>
-    { $printerState }
-  </div>
 </div>
 
 <style>
@@ -20,11 +17,7 @@
 </style>
 
 <script>
-  import octoStore from './OctoStore.js'
-  import {getOutputStates} from './OctoConnection.js'
-
   export default {
-    store: () => octoStore,
     components: { 
       PowerBar: './PowerBar.html', 
       Cube: './Cube.html'

@@ -1,5 +1,5 @@
 <div class='power-button' on:click="set({showDialog:true})">
-  <slot></slot>
+  <SkullIcon/>
 </div>
 
 {#if showDialog}
@@ -7,7 +7,10 @@
 {/if}
 
 
-<script>
+<script>  
+
+    import store from './PowerStore.js';
+
     export default {
       data: () => {
         return {
@@ -15,8 +18,10 @@
         }
       },
       components: { 
+        SkullIcon: './icons/SkullIcon.html',
         KillDialog: './KillDialog.html' 
       },
+      store: () => store
     }
 </script>
         

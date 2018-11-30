@@ -1,13 +1,19 @@
-<div class='power-button' class:on="power" on:click="clicked()">
-  <slot></slot>
+<div class='power-button' class:on on:click="$toggle(apiId)">
+    <svelte:component this="{icons[icon]}"/>
 </div>
 
 <script>
+  import icons from './icons';
+  import store from './PowerStore.js';
+
   export default {
-    methods: {
-      clicked() {
-        this.store.toggle(this.get().id);
-      }
-    }
-  };
+    data: () => ({
+      on: false,
+      icons
+    }),
+    oncreate() {
+      store.on('state', ({current}) => this.set({on: current[this.get().apiId]}));
+    },
+    store: () => store
+  }
 </script>

@@ -1,16 +1,8 @@
 <div id="power-bar">
-  <PowerButton id='lightPower' bind:power=$lightPower>
-    <LightBulbIcon/>
-  </PowerButton>
-  <PowerButton id='fanPower' bind:power=$fanPower>
-    <FanIcon/>
-  </PowerButton>
-  <PowerButton id='printerPower' bind:power=$printerPower>
-    <PrinterIcon/>
-  </PowerButton>
-  <KillButton>
-    <SkullIcon/>
-  </KillButton>
+  {#each $powerButtons as powerButton}
+    <PowerButton apiId={powerButton.apiId} icon={powerButton.icon}/>
+  {/each}
+  <KillButton/>
 </div>
 
 <style>
@@ -35,16 +27,13 @@
 
 <script>
   import store from './PowerStore.js';
+  import confStore from './ConfStore.js'
 
   export default {
     components: {
       PowerButton: './PowerButton.html', 
-      KillButton: './KillButton.html', 
-      LightBulbIcon: './icons/LightBulbIcon.html', 
-      FanIcon:  './icons/FanIcon.html', 
-      PrinterIcon: './icons/PrinterIcon.html', 
-      SkullIcon: './icons/SkullIcon.html'
+      KillButton: './KillButton.html'
     },
-    store: () => store 
+    store: () => confStore 
   };
 </script>      
