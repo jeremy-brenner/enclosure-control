@@ -1,6 +1,18 @@
 {
-  "octoprint": {
-    "host": "http://localhost:port",
-    "key": "ABC123"
-  }
+  "host": "http://octoprinthost:8080",
+  "key": "octoprintkey",
+  "powerButtons": [
+     {
+       "apiId": 2,
+       "icon": "LightBulbIcon"
+     },
+     {
+       "apiId": 3,
+       "icon": "FanIcon"
+     },
+     { 
+       "apiId": 1,
+       "icon": "PrinterIcon"
+     }
+  ]
 }
