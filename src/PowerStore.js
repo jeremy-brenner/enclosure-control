@@ -2,15 +2,20 @@ import { Store } from 'svelte/store.js';
 import { getOutputStates, setOutputState } from './OctoConnection.js';
 
 class PowerStore extends Store {
+  constructor() {
+    super({});
+    this.update();
+    this.startAutomaticUpdate();
+  }
   killPower() {
     Promise.all( Object.keys(this.get()).map(key => setOutputState(key, false)) )
-      .then( () => this.updateStates() );;
+      .then( () => this.update() );;
   }
   toggle(apiId) {
     setOutputState(apiId, !this.get()[apiId])
-      .then( () => this.updateStates() );
+      .then( () => this.update() );
   }
-  updateStates() {
+  update() {
     getOutputStates()
       .then( result => {
         const state = {};
@@ -18,11 +23,9 @@ class PowerStore extends Store {
         this.set(state);
       });
   }
+  startAutomaticUpdate() {
+    window.setInterval( () => this.update(), 1000 );
+  }
 }
 
-const powerStore = new PowerStore({});
-
-powerStore.updateStates()
-window.setInterval( () => powerStore.updateStates(), 1000 );
-
-export default powerStore;
+export default new PowerStore();

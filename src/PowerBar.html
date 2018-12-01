@@ -26,14 +26,13 @@
 </style>
 
 <script>
-  import store from './PowerStore.js';
-  import confStore from './ConfStore.js'
+  import store from './ConfStore.js'
 
   export default {
     components: {
       PowerButton: './PowerButton.html', 
       KillButton: './KillButton.html'
     },
-    store: () => confStore 
+    store: () => store 
   };
 </script>      
