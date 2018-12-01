@@ -1,6 +1,8 @@
 <Cube/>
 <div id=app>
-  <PowerBar/>
+  {#if $powerButtons}
+    <PowerBar/>
+  {/if}
 </div>
 
 <style>
@@ -17,11 +19,14 @@
 </style>
 
 <script>
+  import store from './ConfStore.js';
+
   export default {
     components: { 
       PowerBar: './PowerBar.html', 
       Cube: './Cube.html'
-    }
+    },
+    store: () => store
   }
 </script>
 

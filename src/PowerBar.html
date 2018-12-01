@@ -27,11 +27,18 @@
 
 <script>
   import store from './ConfStore.js'
+  import powerStore from './PowerStore.js'
 
   export default {
     components: {
       PowerButton: './PowerButton.html', 
       KillButton: './KillButton.html'
+    },
+    oncreate() {
+      powerStore.start();
+    },
+    ondestroy() {
+      powerStore.stop();
     },
     store: () => store 
   };

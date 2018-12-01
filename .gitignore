@@ -3,3 +3,4 @@ iran
 npm-debug.log
 public/bundle.*
 conf.json
+conf.*.json
