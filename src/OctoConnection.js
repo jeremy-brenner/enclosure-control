@@ -1,5 +1,11 @@
 import confStore from'./ConfStore.js';
 
+function getPrinterState() {
+  return apiCall('/api/printer?history=true')
+    .then(res => res.json());
+}
+
+
 function getOutputStates() {
   return apiCall('/plugin/enclosure/getOutputStatus')
     .then(res => res.json());
@@ -25,6 +31,7 @@ function requestConfig() {
 
 
 export {
+  getPrinterState,
   getOutputStates,
   setOutputState
 };

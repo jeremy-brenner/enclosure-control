@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "d3-scale": "^2.1.2",
     "npm-run-all": "^4.1.5",
     "rollup": "^0.67.3",
     "rollup-plugin-commonjs": "^9.2.0",

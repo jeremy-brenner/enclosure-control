@@ -3,6 +3,7 @@
   {#if $powerButtons}
     <PowerBar/>
   {/if}
+  <TemperatureChart/>
 </div>
 
 <style>
@@ -24,7 +25,8 @@
   export default {
     components: { 
       PowerBar: './PowerBar.html', 
-      Cube: './Cube.html'
+      Cube: './Cube.html',
+      TemperatureChart: './TemperatureChart.html'
     },
     store: () => store
   }
