@@ -1,0 +1,25 @@
+{#if $state == 'Operational'}
+  <TemperatureChart/>
+{/if}
+{#if $state == 'Closed'}
+  <PrinterConnection/>
+{/if}
+
+<script>
+  import conf from '../conf.json';
+  import store from './PrinterConnectionStore.js';
+
+  export default {
+    components: { 
+      TemperatureChart: './TemperatureChart.html',
+      PrinterConnection: './PrinterConnection.html',
+    },
+    oncreate() {
+      store.start();
+    },
+    ondestroy() {
+      store.stop();
+    },
+    store: () => store
+  }
+</script>

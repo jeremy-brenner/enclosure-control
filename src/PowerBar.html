@@ -1,5 +1,5 @@
 <div id="power-bar">
-  {#each $powerButtons as powerButton}
+  {#each powerButtons as powerButton}
     <PowerButton apiId={powerButton.apiId} icon={powerButton.icon}/>
   {/each}
   <KillButton/>
@@ -26,20 +26,22 @@
 </style>
 
 <script>
-  import store from './ConfStore.js'
   import powerStore from './PowerStore.js'
+  import conf from'../conf.json';
 
   export default {
     components: {
       PowerButton: './PowerButton.html', 
       KillButton: './KillButton.html'
     },
+    data: () => ({
+      powerButtons: conf.powerButtons
+    }),
     oncreate() {
       powerStore.start();
     },
     ondestroy() {
       powerStore.stop();
-    },
-    store: () => store 
+    }
   };
 </script>      

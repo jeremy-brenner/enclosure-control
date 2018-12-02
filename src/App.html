@@ -1,9 +1,9 @@
 <Cube/>
 <div id=app>
-  {#if $powerButtons}
+  {#if powerButtons}
     <PowerBar/>
   {/if}
-  <TemperatureChart/>
+  <Printer/>
 </div>
 
 <style>
@@ -20,15 +20,17 @@
 </style>
 
 <script>
-  import store from './ConfStore.js';
+  import conf from '../conf.json';
 
   export default {
     components: { 
       PowerBar: './PowerBar.html', 
       Cube: './Cube.html',
-      TemperatureChart: './TemperatureChart.html'
+      Printer: './Printer.html',
     },
-    store: () => store
+    data: () => ({
+      powerButtons: conf.powerButtons
+    })
   }
 </script>
 

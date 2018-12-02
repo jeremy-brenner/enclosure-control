@@ -1,36 +1,52 @@
-import confStore from'./ConfStore.js';
+import conf from'../conf.json';
 
-function getPrinterState() {
-  return apiCall('/api/printer?history=true')
+function connect() {
+  return apiPost('/api/connection', {command: 'connect'});
+}
+
+function getConnectionState() {
+  return apiGet('/api/connection')
     .then(res => res.json());
 }
 
+function getPrinterState(opts='') {
+  return apiGet(`/api/printer?${opts}`)
+    .then(res => res.json());
+}
 
 function getOutputStates() {
-  return apiCall('/plugin/enclosure/getOutputStatus')
+  return apiGet('/plugin/enclosure/getOutputStatus')
     .then(res => res.json());
 }
 
 function setOutputState(id,state) {
-  return apiCall(`/plugin/enclosure/setIO?status=${state}&index_id=${id}`)
+  return apiGet(`/plugin/enclosure/setIO?status=${state}&index_id=${id}`)
     .then(res => res.json());
 }
 
-function apiCall(url) {
-  return fetch(`${confStore.get().host}${url}`, requestConfig());
+function apiGet(url) {
+  return fetch(`${conf.host}${url}`, requestConfig());
 }
 
-function requestConfig() { 
+function apiPost(url,data) {
+  return fetch(`${conf.host}${url}`, requestConfig('POST',data));
+}
+
+function requestConfig(method='GET',data) { 
   return {
+    method,
     headers: {
-      "X-Api-Key": confStore.get().key,
-      "Content-Type": "application/json"
-    }
+      'X-Api-Key': conf.key,
+      'Content-Type': 'application/json'
+    },
+    body: data ? JSON.stringify(data) : undefined
   }
 };
 
 
 export {
+  connect,
+  getConnectionState,
   getPrinterState,
   getOutputStates,
   setOutputState

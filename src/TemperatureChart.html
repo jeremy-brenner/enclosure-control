@@ -2,111 +2,44 @@
   <svg ref:svg viewBox="0 0 600 300">
     <g transform="translate(0,300)">
       <g transform="scale(1,-1)">
-    <path class='actual-tool-path-line' d='{actualToolPath}'></path>
-    <path class='target-tool-path-line' d='{targetToolPath}'></path>
-    <path class='actual-bed-path-line' d='{actualBedPath}'></path>
-    <path class='target-bed-path-line' d='{targetBedPath}'></path>
-    <!-- <path class='path-area' d='{actualToolArea}'></path> -->
-    </g></g>
+				{#if $history.length > 0}
+					<TemperatureChartPath color='#FF0000' history={toolHistory}/>
+				  <TemperatureChartPath color='#0000FF' history={bedHistory}/>
+			  {/if}
+		  </g>
+  	</g>
   </svg>
 </div>
 
 <style>
   .chart {
-    width: 60vh;
-		height: 30vh;
-    border: 2px solid green;
-    background: rgba(20,20,20,0.3);
+    width: 80vh;
+		height: 40vh;
+		box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+    background: rgba(44,58,78,0.5);
   }
   svg {
 		position: relative;
 	  width: 100%;
     height: 100%;
 	}
-	.actual-tool-path-line {
-		fill: none;
-		stroke: rgb(100,0,0);
-		stroke-linejoin: round;
-		stroke-linecap: round;
-		stroke-width: 2;
-	}
-
-	.target-tool-path-line {
-		fill: none;
-		stroke: rgb(100,40,0);
-		stroke-linejoin: round;
-		stroke-linecap: round;
-		stroke-width: 2;
-	}
-	.actual-bed-path-line {
-		fill: none;
-		stroke: rgb(18, 0, 100);
-		stroke-linejoin: round;
-		stroke-linecap: round;
-		stroke-width: 2;
-	}
-
-	.target-bed-path-line {
-		fill: none;
-		stroke: rgb(64, 2, 100);
-		stroke-linejoin: round;
-		stroke-linecap: round;
-		stroke-width: 2;
-	}
-	.path-area {
-		fill: rgba(100,0,0,0.4);
-	}
 </style>
 
 <script>
-  import store from './TemperatureStore.js';
-	import { scaleLinear } from 'd3-scale';
-
-	const xScale = scaleLinear();
-	const yScale = scaleLinear();
-
+	import store from './TemperatureStore.js';
+	
   export default {
-    computed: {
-      minX: ({ $history }) => {
-				return $history[0] ? $history[0].time : 0;
+		components: {
+			TemperatureChartPath: './TemperatureChartPath.html'
+		},
+		computed: {
+      bedHistory: ({ $history }) => {
+        return $history.map( data => ({ ...data['bed'], time: data.time }) )
 			},
-			maxX: ({ $history }) => {
-				return $history[$history.length - 1] ? $history[$history.length - 1].time : 0;
-      },
-      xScale: ({ minX, maxX }) => {
-				return xScale
-					.domain([minX, maxX])
-					.range([0,600]);
+			toolHistory: ({ $history }) => {
+        return $history.map( data => ({ ...data['tool0'], time: data.time }) )
 			},
-      actualToolPath: ({ $history, xScale }) => {        
-				return 'M' + $history
-					.map( (point, i) => `${xScale(point.time)},${point.tool0.actual}`)
-          .join('L');
-      },
-      targetToolPath: ({ $history, xScale }) => {        
-				return 'M' + $history
-					.map( (point, i) => `${xScale(point.time)},${point.tool0.target}`)
-          .join('L');
-      },
-      actualBedPath: ({ $history, xScale }) => {        
-				return 'M' + $history
-					.map( (point, i) => `${xScale(point.time)},${point.bed.actual}`)
-          .join('L');
-      },
-      targetBedPath: ({ $history, xScale }) => {        
-				return 'M' + $history
-					.map( (point, i) => `${xScale(point.time)},${point.bed.target}`)
-          .join('L');
-      },
-      actualToolArea: ({ $history, xScale, yScale, minX, maxX, actualToolPath }) => {
-				return actualToolPath + (
-					'L' + xScale(maxX) + ',' + 0 +
-					'L' + xScale(minX) + ',' + 0 +
-					'Z'
-				);
-			}
-
-    },
+		},
     oncreate() {
       store.start(5000);
     },

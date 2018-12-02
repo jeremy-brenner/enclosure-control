@@ -1,0 +1,66 @@
+<g>
+  <path class='actual-path' style='stroke: {color};' d='{actualPath}'></path>
+  <path class='target-path' style='stroke: {color};' d='{targetPath}'></path>
+  <path class='actual-area' style='fill: {color};' d='{actualArea}'></path>
+</g>
+
+<style>
+  .actual-path {
+    fill: none;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-width: 2;
+  }
+
+  .target-path {
+    fill: none;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-width: 2;
+    opacity: 0.6;
+  }
+
+  .actual-area {
+    opacity: 0.3;
+  }
+</style>
+
+
+<script>
+    import linearScale from './LinearScale';
+  
+    export default {
+      namespace: 'svg',
+      computed: {
+        minX: ({ history }) => {
+          return history[0] ? history[0].time : 0;
+        },
+        maxX: ({ history }) => {
+          return history[history.length - 1] ? history[history.length - 1].time : 0;
+        },
+        xScale: ({ minX, maxX }) => {
+          return linearScale(minX, maxX,0,600);
+        },
+        actualPath: ({ history, xScale }) => {
+          return 'M' + history
+            .map( (point) => {
+              return `${xScale(point.time)},${point.actual}`
+            })
+            .join('L');
+        },
+        targetPath: ({ history, xScale }) => {      
+          return 'M' + history
+            .map( (point, i) => `${xScale(point.time)},${point.target}`)
+            .join('L');
+        },
+        actualArea: ({ history, xScale, minX, maxX, actualPath }) => {
+          return actualPath + (
+            'L' + xScale(maxX) + ',' + 0 +
+            'L' + xScale(minX) + ',' + 0 +
+            'Z'
+          );
+        }
+  
+      }
+    };
+  </script>
