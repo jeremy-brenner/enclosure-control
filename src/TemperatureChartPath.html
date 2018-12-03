@@ -39,7 +39,7 @@
           return history[history.length - 1] ? history[history.length - 1].time : 0;
         },
         xScale: ({ minX, maxX }) => {
-          return linearScale(minX, maxX,0,600);
+          return linearScale(minX, maxX,0,800);
         },
         actualPath: ({ history, xScale }) => {
           return 'M' + history
