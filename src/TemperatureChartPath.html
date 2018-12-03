@@ -43,17 +43,15 @@
         },
         actualPath: ({ history, xScale }) => {
           return 'M' + history
-            .map( (point) => {
-              return `${xScale(point.time)},${point.actual}`
-            })
+            .map(point => `${xScale(point.time)},${point.actual}`)
             .join('L');
         },
         targetPath: ({ history, xScale }) => {      
           return 'M' + history
-            .map( (point, i) => `${xScale(point.time)},${point.target}`)
+            .map( point => `${xScale(point.time)},${point.target}`)
             .join('L');
         },
-        actualArea: ({ history, xScale, minX, maxX, actualPath }) => {
+        actualArea: ({ xScale, minX, maxX, actualPath }) => {
           return actualPath + (
             'L' + xScale(maxX) + ',' + 0 +
             'L' + xScale(minX) + ',' + 0 +

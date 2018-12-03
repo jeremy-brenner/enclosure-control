@@ -35,10 +35,14 @@
 		},
 		computed: {
       bedHistory: ({ $history }) => {
-        return $history.map( data => ({ ...data['bed'], time: data.time }) )
+        return $history
+          .map(data => ({ ...data['bed'], time: data.time }))
+          .filter(data => data.hasOwnProperty('actual') && data.hasOwnProperty('target'));
 			},
 			toolHistory: ({ $history }) => {
-        return $history.map( data => ({ ...data['tool0'], time: data.time }) )
+        return $history
+          .map( data => ({ ...data['tool0'], time: data.time }) )
+          .filter(data => data.hasOwnProperty('actual') && data.hasOwnProperty('target'));
 			},
 		},
     oncreate() {
