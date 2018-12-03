@@ -1,6 +1,6 @@
 <div class='chart'>
-  <svg ref:svg width=800 height=480 viewBox="0 0 800 480">
-    <g transform="translate(0,480)">
+  <svg ref:svg preserveAspectRatio="none" viewBox="0 0 800 300">
+    <g transform="translate(0,300)">
       <g transform="scale(1,-1)">
 				{#if $history.length > 0}
 					<TemperatureChartPath color='#FF0000' history={toolHistory}/>
