@@ -1,26 +1,39 @@
 <div id=app>
+{#if $api}
+  <Printer/>
   <Cube/>
   {#if powerButtons}
     <PowerBar/>
   {/if}
-  <Printer/>
+{:else}
+  <div id=error>
+    Octoprint is not accessable at {host}
+  </div>
+{/if}
 </div>
 
 <style>
   #app {
     position: fixed;
     width: 100%;
-    height: 100%;
+    height: 100%; 
     top: 0;
     left: 0;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
+  }
+  #error {
+    bottom: 0;
+    position: absolute;
+    font-size: 3em;
+    color: rgb(83, 17, 17);
   }
 </style>
 
 <script>
   import conf from '../conf.json';
+  import store from './ApiVersionStore.js'
 
   export default {
     components: { 
@@ -28,9 +41,17 @@
       Cube: './Cube.html',
       Printer: './Printer.html',
     },
+    store: () => store,
     data: () => ({
-      powerButtons: conf.powerButtons
-    })
+      powerButtons: conf.powerButtons,
+      host: conf.host
+    }),
+    oncreate() {
+      store.start(5000);
+    },
+    ondestroy() {
+      store.stop();
+    }
   }
 </script>
 

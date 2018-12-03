@@ -4,6 +4,11 @@ function connect() {
   return apiPost('/api/connection', {command: 'connect'});
 }
 
+function getApiVersion() {
+  return apiGet('/api/version')
+  .then(res => res.json());
+}
+
 function getConnectionState() {
   return apiGet('/api/connection')
     .then(res => res.json());
@@ -46,6 +51,7 @@ function requestConfig(method='GET',data) {
 
 export {
   connect,
+  getApiVersion,
   getConnectionState,
   getPrinterState,
   getOutputStates,
