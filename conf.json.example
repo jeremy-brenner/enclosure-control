@@ -1,5 +1,5 @@
 {
-  "host": "http://octoprinthost:8080",
+  "host": "http://localhost:5000",
   "key": "octoprintkey",
   "powerButtons": [
      {
