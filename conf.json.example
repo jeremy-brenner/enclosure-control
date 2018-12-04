@@ -14,5 +14,6 @@
        "apiId": 1,
        "icon": "PrinterIcon"
      }
-  ]
+  ],
+  "cubeSpin": true
 }

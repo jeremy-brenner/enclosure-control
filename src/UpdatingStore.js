@@ -4,7 +4,7 @@ class UpdatingStore extends Store {
   update() {
     console.log('you should override the update method');
   }
-  start(refreshTimeMs=1000) {
+  start(refreshTimeMs=5000) {
     if(!this.interval){
       this.update();
       this.interval = setInterval( () => this.update(), refreshTimeMs );

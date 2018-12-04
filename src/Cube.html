@@ -1,6 +1,6 @@
 <div id="perspective">
   <div id="pane">
-    <div id="cube" class="spin">
+    <div id="cube" class:spin="cubeSpin">
       <div class="face front"></div>
       <div class="face back"></div>
       <div class="face top"></div>
@@ -96,7 +96,14 @@
     transform: translateZ(25vh);
   }
   .face.bottom {
-      transform: rotateX(-90deg) translateZ(25vh);
+    transform: rotateX(-90deg) translateZ(25vh);
   }
-
 </style>
+
+<script>
+  import conf from'../conf.json';
+  
+  export default {
+    data: () => conf
+  }
+</script>
