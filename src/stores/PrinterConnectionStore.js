@@ -1,9 +1,9 @@
 import UpdatingStore from './UpdatingStore.js';
-import { getConnectionState, connect } from '../rest/OctoConnection.js';
+import { getConnectionState, connectToPrinter } from '../rest/OctoConnection.js';
 
 class PrinterConnectionStore extends UpdatingStore {
   connect() {
-    connect()
+    connectToPrinter()
       .then(() => this.set({state:'Unknown'}))
       .then(() => this.update());
   }

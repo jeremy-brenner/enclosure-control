@@ -1,6 +1,6 @@
 import conf from'../../conf.json';
 
-function connect() {
+function connectToPrinter() {
   return apiPost('/api/connection', {command: 'connect'});
 }
 
@@ -50,7 +50,7 @@ function requestConfig(method='GET',data) {
 
 
 export {
-  connect,
+  connectToPrinter,
   getApiVersion,
   getConnectionState,
   getPrinterState,
