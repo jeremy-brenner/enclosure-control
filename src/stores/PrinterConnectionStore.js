@@ -1,5 +1,5 @@
 import UpdatingStore from './UpdatingStore.js';
-import { getConnectionState, connect } from './OctoConnection.js';
+import { getConnectionState, connect } from '../rest/OctoConnection.js';
 
 class PrinterConnectionStore extends UpdatingStore {
   connect() {

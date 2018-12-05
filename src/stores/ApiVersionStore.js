@@ -1,5 +1,5 @@
 import UpdatingStore from './UpdatingStore.js';
-import { getApiVersion } from './OctoConnection.js';
+import { getApiVersion } from '../rest/OctoConnection.js';
 
 class ApiVersionStore extends UpdatingStore {
   update() {

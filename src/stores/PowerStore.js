@@ -1,5 +1,5 @@
 import UpdatingStore from './UpdatingStore.js';
-import { getOutputStates, setOutputState } from './OctoConnection.js';
+import { getOutputStates, setOutputState } from '../rest/OctoConnection.js';
 
 class PowerStore extends UpdatingStore {
   killPower() {

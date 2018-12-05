@@ -1,4 +1,4 @@
-import conf from'../conf.json';
+import conf from'../../conf.json';
 
 function connect() {
   return apiPost('/api/connection', {command: 'connect'});
