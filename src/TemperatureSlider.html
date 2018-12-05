@@ -1,8 +1,8 @@
 
 <div id='temperature-slider'>
   {key}
-  <div id='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" style='top: {handlePosition}vh;'></div>
-{temp}
+  <div id='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" on:dragend="dragend(event)" style='top: {handlePosition}vh;'></div>
+  {temp}
 </div>
 
 <script>
@@ -29,17 +29,24 @@
         // }
       },
       methods: {
-        drag(e){
-         // console.log(e);
-          const y = e.y;
-          const newPos = y / innerHeight * 100;
-          if(newPos>90||newPos<5) {
+        drag({y}){
+          if(y==0) {
             return;
+          }
+          let newPos = y / innerHeight * 100;
+          if(newPos>90) {
+            newPos=90;
+          }
+          if(newPos<5) {
+            newPos=5;
           }
           this.set({handlePosition:newPos});
         },
         dragstart(e) {
           e.dataTransfer.setDragImage(document.createElement('img'), 0, 0);
+        },
+        dragend(e) {
+          console.log(e);
         }
       }
     }
