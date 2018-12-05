@@ -1,11 +1,16 @@
-<div id='printer-connection'>
-  <div class='message'>
-    Printer not connected.
+{#if $state == 'Operational'}
+  <Printer/>
+{/if}
+{#if $state == 'Closed'}
+  <div id='printer-connection'>
+    <div class='message'>
+      Printer not connected.
+    </div>
+    <div class='button' on:click="$connect()">
+      connect
+    </div>
   </div>
-  <div class='button' on:click="$connect()">
-    connect
-  </div>
-</div>
+{/if}
 
 <style>
   #printer-connection {
@@ -37,13 +42,22 @@
     height: 13vh; 
     flex: 0 1 100%;
   }
-
 </style>
 
 <script>
+  import conf from '../conf.json';
   import store from './stores/PrinterConnectionStore.js';
 
   export default {
+    components: { 
+      Printer: './Printer.html',
+    },
+    oncreate() {
+      store.start();
+    },
+    ondestroy() {
+      store.stop();
+    },
     store: () => store
   }
 </script>

@@ -18,6 +18,7 @@ body {
 
 .side-bar {
   z-index: 10;
+  display: inline-block;
 }
 .side-bar .button {
   width: 25vh;

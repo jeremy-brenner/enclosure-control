@@ -2,10 +2,8 @@
   <svg ref:svg preserveAspectRatio="none" viewBox="0 0 800 300">
     <g transform="translate(0,300)">
       <g transform="scale(1,-1)">
-				{#if $history.length > 0}
-					<TemperatureChartPath color='#FF0000' history={toolHistory}/>
-				  <TemperatureChartPath color='#0000FF' history={bedHistory}/>
-			  {/if}
+				<TemperatureChartPath color='#FF0000' history={toolHistory}/>
+				<TemperatureChartPath color='#0000FF' history={bedHistory}/>
 		  </g>
   	</g>
   </svg>
@@ -14,7 +12,7 @@
 <style>
   .chart {
     bottom: 0;
-    z-index: 0;
+    z-index: -10;
     position: absolute;
     width: 100vw;
 		height: 100vh;
@@ -27,30 +25,26 @@
 </style>
 
 <script>
-	import store from './stores/TemperatureStore.js';
+	import store from './stores/PrinterStateStore.js';
 	
   export default {
 		components: {
 			TemperatureChartPath: './TemperatureChartPath.html'
 		},
 		computed: {
-      bedHistory: ({ $history }) => {
-        return $history
+      bedHistory: ({ $temperature }) => {
+        return $temperature
+          .history
           .map(data => ({ ...data['bed'], time: data.time }))
           .filter(data => data.hasOwnProperty('actual') && data.hasOwnProperty('target'));
 			},
-			toolHistory: ({ $history }) => {
-        return $history
+			toolHistory: ({ $temperature }) => {
+        return $temperature
+          .history
           .map( data => ({ ...data['tool0'], time: data.time }) )
           .filter(data => data.hasOwnProperty('actual') && data.hasOwnProperty('target'));
 			},
 		},
-    oncreate() {
-      store.start();
-    },
-    ondestroy() {
-      store.stop();
-    },
     store: () => store 
   };
 </script>

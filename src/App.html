@@ -7,10 +7,10 @@
   {/if}
 
   {#if $state == 'Connected'}
-    <Printer/>
     {#if powerButtons}
       <PowerBar/>
     {/if}
+    <PrinterConnection/>
   {/if}
 </div>
 
@@ -21,9 +21,6 @@
     height: 100%; 
     top: 0;
     left: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap; 
   }
   #error {
     bottom: 0;
@@ -41,7 +38,7 @@
     components: { 
       PowerBar: './PowerBar.html', 
       Cube: './Cube.html',
-      Printer: './Printer.html',
+      PrinterConnection: './PrinterConnection.html',
     },
     store: () => store,
     data: () => ({
