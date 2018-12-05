@@ -1,20 +1,30 @@
+
 <div id="printer-bar" class='side-bar'>
-  <div class='button'>
-    hi
-  </div>
-  <div class='button'>
-    hi
-  </div>
-  <div class='button'>
-    hi
-  </div>
-  <div class='button'>
-    hi
-  </div>
+  <TemperatureButton name='Tool0' key='tool0' temperature='{$temperature}' bind:activeButton/>
+  <TemperatureButton name='Bed' key='bed' temperature='{$temperature}' bind:activeButton/>
 </div>
+{#if activeButton}
+  <TemperatureSlider key={activeButton}/>
+{/if}
 
 <style>
   #printer-bar {
     float: right;
   }
 </style>
+
+
+<script>
+    import store from './stores/PrinterStateStore.js';
+    
+    export default {
+      store: () => store,
+      data: () => ({
+        activeButton: false
+      }),
+      components: {
+        TemperatureButton: './TemperatureButton.html', 
+        TemperatureSlider: './TemperatureSlider.html',
+      }
+    }
+</script>

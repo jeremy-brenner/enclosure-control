@@ -1,0 +1,67 @@
+
+<div id='temperature-slider'>
+  {key}
+  <div id='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" style='top: {handlePosition}vh;'></div>
+{temp}
+</div>
+
+<script>
+    import store from './stores/PrinterStateStore.js';
+    
+    export default {
+      store: () => store,
+      data: () => ({
+        handlePosition: 90
+      }),
+      computed: {
+        actual({$temperature, key}) {
+         return $temperature[key].actual;
+        }, 
+        target({$temperature, key}) {
+          return $temperature[key].target;
+        },
+        temp({handlePosition}) {
+          return Math.round((90-handlePosition)/85*300);
+          // return 90-target/300*85
+        }
+        // handlePosition({target}) {
+        //   return 90-target/300*85
+        // }
+      },
+      methods: {
+        drag(e){
+         // console.log(e);
+          const y = e.y;
+          const newPos = y / innerHeight * 100;
+          if(newPos>90||newPos<5) {
+            return;
+          }
+          this.set({handlePosition:newPos});
+        },
+        dragstart(e) {
+          e.dataTransfer.setDragImage(document.createElement('img'), 0, 0);
+        }
+      }
+    }
+</script>
+
+<style>
+  #temperature-slider {
+    float: right;
+    position: relative;
+    z-index: 10;
+    width: 25vh;
+    height: 100vh;
+    box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+    background: rgba(44,58,78,0.5);
+  }
+
+  #handle {
+    position: absolute;
+    left: 7vh;
+    width: 11vh;
+    height: 5vh;
+    box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+    background: rgba(44,58,78,0.5);
+  }
+</style>

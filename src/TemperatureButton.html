@@ -1,0 +1,30 @@
+<div class='button' class:on=active on:click='set({activeButton:nextState})'>
+  { name }
+  Actual: { actual }
+  Target: { target }
+</div>
+
+<script>  
+  export default {
+     data: () => ({
+       name: '',
+       key: '',
+       temperature: {},
+       activeButton: false
+     }),
+     computed: {
+       actual({temperature, key}) {
+         return temperature[key].actual;
+       }, 
+       target({temperature, key}) {
+         return temperature[key].target;
+       },
+       active({activeButton, key}) {
+         return activeButton == key;
+       },
+       nextState({active, key}) {
+         return active ? false : key
+       }
+     }
+  }
+</script>
