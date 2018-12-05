@@ -1,15 +1,17 @@
 <div id=app>
   <Cube/>
-{#if $api}
-  <Printer/>
-  {#if powerButtons}
-    <PowerBar/>
+  {#if $state == 'Error'}
+    <div id=error>
+      Octoprint is not accessible at {host}
+    </div>
   {/if}
-{:else}
-  <div id=error>
-    Octoprint is not accessible at {host}
-  </div>
-{/if}
+
+  {#if $state == 'Connected'}
+    <Printer/>
+    {#if powerButtons}
+      <PowerBar/>
+    {/if}
+  {/if}
 </div>
 
 <style>
@@ -33,7 +35,7 @@
 
 <script>
   import conf from '../conf.json';
-  import store from './stores/ApiVersionStore.js'
+  import store from './stores/ApiConnectionStateStore.js'
 
   export default {
     components: { 

@@ -5,8 +5,9 @@ class ApiVersionStore extends UpdatingStore {
   update() {
     getApiVersion()
     .then((data)=> this.set(data))
-    .catch(() => this.set({api:false}));
+    .then(() => this.set({state: 'Connected'}))
+    .catch(() => this.set({state: 'Error'}));
   }
 }
 
-export default new ApiVersionStore({api:false});
+export default new ApiVersionStore({state: 'Unknown'});
