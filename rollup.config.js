@@ -29,7 +29,7 @@ export default {
 		commonjs(),
 		copy([
       { files: 'src/static/*.*', dest: 'public' },
-    ], { verbose: true, watch: true }),
+    ], { verbose: true, watch: !production }),
 		production && terser()
 	]
 };
