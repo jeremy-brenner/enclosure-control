@@ -15,3 +15,24 @@ body {
 * {
   user-select: none;
 }
+
+.side-bar {
+  z-index: 10;
+}
+.side-bar .button {
+  width: 25vh;
+  height: 25vh;
+  box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+  background: rgba(44,58,78,0.5);
+}
+
+.side-bar .button.on {
+  background: rgba(88,116,156,0.5);
+}
+
+.side-bar .button svg {
+  fill: rgba(24,38,58);
+  padding: 10%;
+  width: 80%;
+  height: 80%;
+}
