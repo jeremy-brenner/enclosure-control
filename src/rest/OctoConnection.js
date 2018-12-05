@@ -9,6 +9,27 @@ function getApiVersion() {
   .then(res => res.json());
 }
 
+function setTemp(key,temp) {
+  return key==='bed' ? setBedTemp(temp) : setToolTemp(key,temp);
+}
+
+function setBedTemp(temp) {
+  return apiPost('/api/printer/bed',  {
+    command: 'target',
+    target: temp
+  });
+}
+
+function setToolTemp(key,temp) {
+  return apiPost('/api/printer/tool',  {
+    command: 'target',
+    targets: {
+      [key]: temp
+    }
+  });
+}
+
+
 function getConnectionState() {
   return apiGet('/api/connection')
     .then(res => res.json());
@@ -51,6 +72,7 @@ function requestConfig(method='GET',data) {
 
 export {
   connectToPrinter,
+  setTemp,
   getApiVersion,
   getConnectionState,
   getPrinterState,
