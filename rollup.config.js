@@ -3,6 +3,9 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy-glob';
+import md5 from 'md5';
+import fs from 'fs';
+import util from 'util';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -25,6 +28,13 @@ export default {
 		}),
 		resolve(),
 		commonjs(),
+		{
+			name: 'md5',
+			generateBundle(outputOptions, bundle) {
+				const md5sum = md5(JSON.stringify(bundle));
+				util.promisify(fs.writeFile)('public/md5.json', JSON.stringify({md5sum}));
+			}
+		},
 		copy(
 			[{ files: 'src/static/*.*', dest: 'public' }], { verbose: true, watch: !production }
 		),

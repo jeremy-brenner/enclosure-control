@@ -2,6 +2,9 @@
   {#if $host}
     <EnclosureControl/>
   {/if}
+  {#if $outOfDate}
+    <ReloadPage/>
+  {/if}
 </div>
 
 <style>
@@ -20,6 +23,7 @@
   export default {
     components: { 
       EnclosureControl: './EnclosureControl.html', 
+      ReloadPage: './ReloadPage.html'
     },
     store: () => confStore,
     oncreate() {

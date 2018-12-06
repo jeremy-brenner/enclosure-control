@@ -21,5 +21,8 @@
     "rollup-plugin-terser": "^3.0.0",
     "sirv-cli": "^0.2.3",
     "svelte": "^2.15.3"
+  },
+  "dependencies": {
+    "md5": "^2.2.1"
   }
 }
