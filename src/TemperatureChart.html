@@ -25,7 +25,7 @@
 </style>
 
 <script>
-	import store from './stores/PrinterStateStore.js';
+	import printerStateStore from './stores/PrinterStateStore.js';
 	
   export default {
 		components: {
@@ -45,6 +45,6 @@
           .filter(data => data.hasOwnProperty('actual') && data.hasOwnProperty('target'));
 			},
 		},
-    store: () => store 
+    store: () => printerStateStore 
   };
 </script>

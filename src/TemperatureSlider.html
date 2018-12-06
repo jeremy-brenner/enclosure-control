@@ -20,7 +20,6 @@
   #slider-track {
     position: absolute;
     top: 5vh;
-    /* padding-bottom: 5vh; */
     left: 12vh;
     width: 1vh;
     height: 85vh;
@@ -38,10 +37,10 @@
 </style>
 
 <script>
-    import store from './stores/PrinterStateStore.js';
+    import printerStateStore from './stores/PrinterStateStore.js';
     
     export default {
-      store: () => store,
+      store: () => printerStateStore,
       data: () => ({
         key: false,
         sliderTemp: 0

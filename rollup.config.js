@@ -24,12 +24,11 @@ export default {
 				css.write('public/bundle.css');
 			}
 		}),
-		json(),
 		resolve(),
 		commonjs(),
-		copy([
-      { files: 'src/static/*.*', dest: 'public' },
-    ], { verbose: true, watch: !production }),
+		copy(
+			[{ files: 'src/static/*.*', dest: 'public' }], { verbose: true, watch: !production }
+		),
 		production && terser()
 	]
 };

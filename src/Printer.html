@@ -4,7 +4,7 @@
 {/if}
 
 <script> 
-	import store from './stores/PrinterStateStore.js';
+	import printerStateStore from './stores/PrinterStateStore.js';
 
   export default {
     components: { 
@@ -12,11 +12,11 @@
       PrinterBar: './PrinterBar.html'
     },
     oncreate() {
-      store.start();
+      printerStateStore.start();
     },
     ondestroy() {
-      store.stop();
+      printerStateStore.stop();
     },
-    store: () => store
+    store: () => printerStateStore
   }
 </script>

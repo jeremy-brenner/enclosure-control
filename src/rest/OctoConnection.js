@@ -1,4 +1,4 @@
-import conf from'../../conf.json';
+import confStore from '../stores/ConfStore.js';
 
 function connectToPrinter() {
   return apiPost('/api/connection', {command: 'connect'});
@@ -51,18 +51,18 @@ function setOutputState(id,state) {
 }
 
 function apiGet(url) {
-  return fetch(`${conf.host}${url}`, requestConfig());
+  return fetch(`${confStore.get().host}${url}`, requestConfig());
 }
 
 function apiPost(url,data) {
-  return fetch(`${conf.host}${url}`, requestConfig('POST',data));
+  return fetch(`${confStore.get().host}${url}`, requestConfig('POST',data));
 }
 
 function requestConfig(method='GET',data) { 
   return {
     method,
     headers: {
-      'X-Api-Key': conf.key,
+      'X-Api-Key': confStore.get().key,
       'Content-Type': 'application/json'
     },
     body: data ? JSON.stringify(data) : undefined

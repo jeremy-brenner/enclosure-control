@@ -7,7 +7,7 @@
 
 <script>
   import powerStore from './stores/PowerStore.js'
-  import conf from'../conf.json';
+  import confStore from './stores/ConfStore.js'
 
   export default {
     components: {
@@ -15,7 +15,7 @@
       KillButton: './KillButton.html'
     },
     data: () => ({
-      powerButtons: conf.powerButtons
+      powerButtons: confStore.get().powerButtons
     }),
     oncreate() {
       powerStore.start();

@@ -1,6 +1,6 @@
 <div id="perspective">
   <div id="pane">
-    <div id="cube" class:spin="cubeSpin">
+    <div id="cube" class:spin="$cubeSpin">
       <div class="face front"></div>
       <div class="face back"></div>
       <div class="face top"></div>
@@ -100,9 +100,9 @@
 </style>
 
 <script>
-  import conf from'../conf.json';
-  
+  import confStore from './stores/ConfStore.js'
+
   export default {
-    data: () => conf
+    store: () => confStore
   }
 </script>

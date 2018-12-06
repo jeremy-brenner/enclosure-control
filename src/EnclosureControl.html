@@ -1,0 +1,47 @@
+<Cube/>
+{#if $state == 'Error'}
+    <div id=error>
+    Octoprint is not accessible at {host}
+    </div>
+{/if}
+
+{#if $state == 'Connected'}
+    {#if powerButtons}
+    <PowerBar/>
+    {/if}
+    <PrinterConnection/>
+{/if}
+
+<style>
+#error {
+    bottom: 0;
+    position: absolute;
+    font-size: 3em;
+    color: rgb(83, 17, 17);
+}
+</style>
+
+<script>
+import apiConnectionStateStore from './stores/ApiConnectionStateStore.js'
+import confStore from './stores/ConfStore.js'
+
+export default {
+    components: { 
+        PowerBar: './PowerBar.html', 
+        Cube: './Cube.html',
+        PrinterConnection: './PrinterConnection.html',
+    },
+    store: () => apiConnectionStateStore,
+    data: () => ({
+      powerButtons: confStore.get().powerButtons,
+      host: confStore.get().host
+    }),
+    oncreate() {
+      apiConnectionStateStore.start();
+    },
+    ondestroy() {
+      apiConnectionStateStore.stop();
+    }
+}
+</script>
+

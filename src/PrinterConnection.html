@@ -47,19 +47,18 @@
 </style>
 
 <script>
-  import conf from '../conf.json';
-  import store from './stores/PrinterConnectionStore.js';
+  import printerConnectionStore from './stores/PrinterConnectionStore.js';
 
   export default {
     components: { 
       Printer: './Printer.html',
     },
     oncreate() {
-      store.start();
+      printerConnectionStore.start();
     },
     ondestroy() {
-      store.stop();
+      printerConnectionStore.stop();
     },
-    store: () => store
+    store: () => printerConnectionStore
   }
 </script>

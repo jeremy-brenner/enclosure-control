@@ -1,16 +1,6 @@
 <div id=app>
-  <Cube/>
-  {#if $state == 'Error'}
-    <div id=error>
-      Octoprint is not accessible at {host}
-    </div>
-  {/if}
-
-  {#if $state == 'Connected'}
-    {#if powerButtons}
-      <PowerBar/>
-    {/if}
-    <PrinterConnection/>
+  {#if $host}
+    <EnclosureControl/>
   {/if}
 </div>
 
@@ -22,34 +12,21 @@
     top: 0;
     left: 0;
   }
-  #error {
-    bottom: 0;
-    position: absolute;
-    font-size: 3em;
-    color: rgb(83, 17, 17);
-  }
 </style>
 
 <script>
-  import conf from '../conf.json';
-  import store from './stores/ApiConnectionStateStore.js'
+  import confStore from './stores/ConfStore.js'
 
   export default {
     components: { 
-      PowerBar: './PowerBar.html', 
-      Cube: './Cube.html',
-      PrinterConnection: './PrinterConnection.html',
+      EnclosureControl: './EnclosureControl.html', 
     },
-    store: () => store,
-    data: () => ({
-      powerButtons: conf.powerButtons,
-      host: conf.host
-    }),
+    store: () => confStore,
     oncreate() {
-      store.start();
+      confStore.start();
     },
     ondestroy() {
-      store.stop();
+      confStore.stop();
     }
   }
 </script>

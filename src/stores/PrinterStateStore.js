@@ -1,10 +1,10 @@
 import UpdatingStore from './UpdatingStore.js';
 import { getPrinterState, setTemp } from '../rest/OctoConnection.js';
 
-class TemperatureStore extends UpdatingStore {
+class PrinterStateStore extends UpdatingStore {
   update() {
     getPrinterState('history=true&limit=1000')
-    .then((state) => this.set(state));
+      .then((state) => this.set(state));
   }
   setTemp(key,temp) {
     setTemp(key,temp)
@@ -12,4 +12,4 @@ class TemperatureStore extends UpdatingStore {
   }
 }
 
-export default new TemperatureStore();
+export default new PrinterStateStore();
