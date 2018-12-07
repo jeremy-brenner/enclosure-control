@@ -1,8 +1,13 @@
 
 <div id='temperature-slider'>
-  {name} { actual } / { sliderTemp }
+  <div class='temps'>
+    { actual } / { sliderTemp }
+  </div>
   <div ref:track id='slider-track'>
     <div id='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" on:dragend="dragend(event)" style='top: {handlePosition}%;'></div>
+  </div>
+  <div class='name'>
+    {name}
   </div>
 </div>
 
@@ -15,17 +20,28 @@
     height: 100vh;
     box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
     background: rgba(44,58,78,0.8);
-    font-size: 2.5vh;
+    font-size: 5vh;
     text-align: center;
-    padding-top: 1.5vh;
   }
-  
+
+  #temperature-slider .temps {
+    top: 1vh;
+    position: absolute;
+    width: 100%;
+  }
+
+  #temperature-slider .name {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+  }
+
   #slider-track {
     position: absolute;
-    top: 5vh;
+    top: 10vh;
     left: 12vh;
     width: 1vh;
-    height: 85vh;
+    height: 80vh;
     background-color: rgb(24,38,58);
   }
 
