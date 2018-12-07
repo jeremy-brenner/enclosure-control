@@ -15,5 +15,17 @@
        "icon": "PrinterIcon"
      }
   ],
+  "temperatureControls": [
+    {
+      "key": "tool0",
+      "name": "Hotend",
+      "icon": "BedIcon"
+    },
+    {
+      "key": "bed",
+      "name": "Bed",
+      "icon": "BedIcon"
+    }
+  ],
   "cubeSpin": true
 }

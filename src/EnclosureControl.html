@@ -1,14 +1,12 @@
 <Cube/>
-{#if $state == 'Error'}
+{#if $apiStatus == 'Error'}
     <div id=error>
     Octoprint is not accessible at {host}
     </div>
 {/if}
 
-{#if $state == 'Connected'}
-    {#if powerButtons}
+{#if $apiStatus == 'Connected'}
     <PowerBar/>
-    {/if}
     <PrinterConnection/>
 {/if}
 
@@ -33,7 +31,6 @@ export default {
     },
     store: () => apiConnectionStateStore,
     data: () => ({
-      powerButtons: confStore.get().powerButtons,
       host: confStore.get().host
     }),
     oncreate() {

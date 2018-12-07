@@ -4,7 +4,7 @@ import { getPrinterState, setTemp } from '../rest/OctoConnection.js';
 class PrinterStateStore extends UpdatingStore {
   update() {
     getPrinterState('history=true&limit=1000')
-      .then((state) => this.set(state));
+      .then(({data, apiStatus}) => this.set({...data, apiStatus}));
   }
   setTemp(key,temp) {
     setTemp(key,temp)

@@ -4,7 +4,7 @@ class ConfStore extends UpdatingStore {
   update() {
     fetch('/conf.json')
       .then(res => res.json())
-      .then(conf => this.set(conf));
+      .then(conf => this.set({...conf,ready:true}));
     fetch('/md5.json')
       .then(res => res.json())
       .then(({md5sum}) => {

@@ -4,9 +4,7 @@ import { getApiVersion } from '../rest/OctoConnection.js';
 class ApiVersionStore extends UpdatingStore {
   update() {
     getApiVersion()
-    .then((data)=> this.set(data))
-    .then(() => this.set({state: 'Connected'}))
-    .catch(() => this.set({state: 'Error'}));
+      .then(({data, apiStatus})=> this.set({...data, apiStatus}));
   }
 }
 

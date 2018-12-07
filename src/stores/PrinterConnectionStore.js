@@ -8,9 +8,8 @@ class PrinterConnectionStore extends UpdatingStore {
       .then(() => this.update());
   }
   update() {
-    getConnectionState().then(res => {
-      this.set({state:res.current.state});
-    });
+    getConnectionState()
+      .then(({data, apiStatus})=> this.set({state: data.current.state, apiStatus}));
   }
 }
 

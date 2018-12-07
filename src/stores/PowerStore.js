@@ -12,9 +12,9 @@ class PowerStore extends UpdatingStore {
   }
   update() {
     getOutputStates()
-      .then( result => {
-        const state = {};
-        result.forEach(newState => state[newState.index_id] = newState.status);
+      .then(({data, apiStatus}) => {
+        const state = { apiStatus };
+        data.forEach(newState => state[newState.index_id] = newState.status);
         this.set(state);
       });
   }

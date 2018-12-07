@@ -4,6 +4,8 @@ import PrinterIcon from './PrinterIcon.html';
 import SkullIcon from './SkullIcon.html';
 import CancelIcon from './CancelIcon.html';
 import CheckMarkIcon from './CheckMarkIcon.html';
+import BedTemperatureIcon from './BedTemperatureIcon.html';
+import ToolTemperatureIcon from './ToolTemperatureIcon.html';
 
 export default {
   LightBulbIcon,
@@ -11,5 +13,7 @@ export default {
   PrinterIcon,
   SkullIcon,
   CancelIcon,
-  CheckMarkIcon
+  CheckMarkIcon,
+  BedTemperatureIcon,
+  ToolTemperatureIcon
 };

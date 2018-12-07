@@ -1,6 +1,6 @@
 
 <div id='temperature-slider'>
-  {key} {sliderTemp}
+  {name} { actual } / { sliderTemp }
   <div ref:track id='slider-track'>
     <div id='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" on:dragend="dragend(event)" style='top: {handlePosition}%;'></div>
   </div>
@@ -14,7 +14,10 @@
     width: 25vh;
     height: 100vh;
     box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
-    background: rgba(44,58,78,0.5);
+    background: rgba(44,58,78,0.8);
+    font-size: 2.5vh;
+    text-align: center;
+    padding-top: 1.5vh;
   }
   
   #slider-track {
@@ -32,26 +35,33 @@
     height: 5vh;
     left: -5vh;
     box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
-    background: rgba(44,58,78,0.5);
+    background: rgba(44,58,78,0.8);
   }
 </style>
 
 <script>
     import printerStateStore from './stores/PrinterStateStore.js';
-    
+    import confStore from './stores/ConfStore.js';
+
     export default {
       store: () => printerStateStore,
       data: () => ({
         key: false,
-        sliderTemp: 0
+        sliderTemp: 0,
+        name: ''
       }),
       onstate({changed,current}) {
         if(changed.key) {
           const sliderTemp = this.store.get().temperature[current.key].target;
-          this.set({sliderTemp});
+          const name = confStore.get().temperatureControls.find((control)=> control.key === current.key).name;
+          this.set({sliderTemp, name});
+          
         }
       },
       computed: { 
+        actual({$temperature, key}) {
+          return $temperature[key].actual;
+        }, 
         handlePosition({sliderTemp}) {
           return 100-(sliderTemp/300*100)-2.5
         }

@@ -1,16 +1,33 @@
 <div class='button' class:on=active on:click='set({activeButton:nextState})'>
-  { name }
-  Actual: { actual }
-  Target: { target }
+  <svelte:component this="{icons[icon]}"/>
+  <div class='temp'>
+      { actual } / { target }
+  </div>
 </div>
+<style>
+  .button {
+    position: relative;
+  }
 
+  .button .temp {
+    position: absolute;
+    bottom: 0.3vh;
+    font-size: 2.5vh;
+    text-align: center;
+    width: 100%;
+  }
+
+</style>
 <script>  
+    import icons from './icons';
+
   export default {
      data: () => ({
        name: '',
        key: '',
        temperature: {},
-       activeButton: false
+       activeButton: false,
+       icons
      }),
      computed: {
        actual({temperature, key}) {

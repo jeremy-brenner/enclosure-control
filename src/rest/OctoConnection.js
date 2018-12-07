@@ -5,8 +5,7 @@ function connectToPrinter() {
 }
 
 function getApiVersion() {
-  return apiGet('/api/version')
-  .then(res => res.json());
+  return apiGet('/api/version');
 }
 
 function setTemp(key,temp) {
@@ -31,27 +30,26 @@ function setToolTemp(key,temp) {
 
 
 function getConnectionState() {
-  return apiGet('/api/connection')
-    .then(res => res.json());
+  return apiGet('/api/connection');
 }
 
 function getPrinterState(opts='') {
-  return apiGet(`/api/printer?${opts}`)
-    .then(res => res.json());
+  return apiGet(`/api/printer?${opts}`);
 }
 
 function getOutputStates() {
-  return apiGet('/plugin/enclosure/getOutputStatus')
-    .then(res => res.json());
+  return apiGet('/plugin/enclosure/getOutputStatus');
 }
 
 function setOutputState(id,state) {
-  return apiGet(`/plugin/enclosure/setIO?status=${state}&index_id=${id}`)
-    .then(res => res.json());
+  return apiGet(`/plugin/enclosure/setIO?status=${state}&index_id=${id}`);
 }
 
 function apiGet(url) {
-  return fetch(`${confStore.get().host}${url}`, requestConfig());
+  return fetch(`${confStore.get().host}${url}`, requestConfig())
+    .then(res => res.json())
+    .then(data => ({data, apiStatus:'Connected'}))
+    .catch(() => ({apiStatus:'Error'}));
 }
 
 function apiPost(url,data) {
