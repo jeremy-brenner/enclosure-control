@@ -1,4 +1,4 @@
-<div class='button' class:on on:click="$toggle(apiId)">
+<div class='control button' class:active on:click="$toggle(apiId)">
     <svelte:component this="{icons[icon]}"/>
 </div>
 
@@ -8,11 +8,11 @@
 
   export default {
     data: () => ({
-      on: false,
+      active: false,
       icons
     }),
     oncreate() {
-      powerStore.on('state', ({current}) => this.set({on: current[this.get().apiId]}));
+      powerStore.on('state', ({current}) => this.set({active: current[this.get().apiId]}));
     },
     store: () => powerStore
   }

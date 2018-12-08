@@ -1,18 +1,12 @@
 
-<div id="printer-bar" class='side-bar'>
+{#if activeButton}
+<TemperatureSlider key={activeButton}/>
+{/if}
+<div id="printer-bar" class='side-column'>
   {#each temperatureControls(confStore) as control}
     <TemperatureButton name='{control.name}' key='{control.key}' icon='{control.icon}' temperature='{$temperature}' bind:activeButton/>
   {/each}
 </div>
-{#if activeButton}
-  <TemperatureSlider key={activeButton}/>
-{/if}
-
-<style>
-  #printer-bar {
-    float: right;
-  }
-</style>
 
 <script>
     import printerStateStore from './stores/PrinterStateStore.js';
