@@ -1,14 +1,10 @@
-<div id="perspective">
-  <div id="pane">
-    <div id="cube" class:spin="$conf.cubeSpin">
-      <div class="face front"></div>
-      <div class="face back"></div>
-      <div class="face top"></div>
-      <div class="face bottom"></div>
-      <div class="face left"></div>
-      <div class="face right"></div>
-    </div>
-  </div>
+<div class='cube' style='top: {heightDiff}%;' class:spin="$conf.cubeSpin" class:pulse="pulse==='true'">
+  <div class="face front" style='height: {height}%;'></div>
+  <div class="face back" style='height: {height}%;'></div>
+  <div class="face top"></div>
+  <div class="face bottom" style='bottom: {heightDiff}%;'></div>
+  <div class="face left" style='height: {height}%;'></div>
+  <div class="face right" style='height: {height}%;'></div>
 </div>
 
 <style>
@@ -32,25 +28,9 @@
       transform: rotateY(-360deg);
     }
   }
-  
-  #perspective {
-    position: fixed;
-    z-index: -5;
-    left:50vw; top:50vh;
-    width: 50vh;
-    height: 50vh;
-    margin-left: -25vh;
-    margin-top: -25vh;
-  }
 
-  #pane {
-    width:100%; height:100%;
-    transform-style: preserve-3d;
-    transform: rotateX(-35.27deg);
-  }
-
-  #cube {
-    position: relative;
+  .cube {
+    position: absolute;
     top: 0;
     transform-style: preserve-3d;
     transform: rotateY(45deg);
@@ -59,24 +39,23 @@
     height: 50vh;
   }
 
-  #cube.spin {
+  .cube.spin {
       animation: spin 40s linear infinite;
   }
 
-  #cube .face {
+  .cube .face {
     position: absolute;
     width:100%; height:100%;
+    filter: opacity(0.4);
     background: #2C3A4E;
-    filter: opacity(0.7);
     box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
     text-align: center;
     line-height: 0;
   }
 
-  #cube.pulse .face {
-    background: #B82202;
-    filter: brightness(50%);
-    animation: pulse 5s linear infinite
+  .cube.pulse .face {
+    background: rgba(57, 75, 100, 1);
+    animation: pulse 10s linear infinite
   }
 
   .face.back {
@@ -103,6 +82,14 @@
   import store from './stores/AppDataStore.js'
 
   export default {
-    store: () => store
+    store: () => store,
+    data: () => ({
+      pulse: 'false'
+    }),
+    computed: {
+      heightDiff({height}) {
+        return 100 - height;
+      }
+    }
   }
 </script>
