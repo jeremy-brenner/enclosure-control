@@ -52,8 +52,6 @@
 
 <script>
     import store from './stores/AppDataStore.js';
-    import { setTemp } from './rest/OctoConnection.js';
-    import { runJob } from './stores/StoreManager.js';
 
     export default {
       store: () => store,
@@ -90,8 +88,7 @@
         },
         dragend(e) {
           const { key, sliderTemp } = this.get();
-          setTemp(key, sliderTemp)
-            .then( () => runJob('printerState'));
+          store.setTemp(key, sliderTemp);
         },
       }
     }

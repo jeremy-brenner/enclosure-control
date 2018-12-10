@@ -1,5 +1,8 @@
 class Job {
-  constructor(){
+  constructor(id, dependsOn, exec){
+    this.id = id;
+    this.dependsOn = dependsOn;
+    this.exec = exec;
     this.lastRun = 0;
     this.status = 'Unknown'
   }

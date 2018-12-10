@@ -85,8 +85,6 @@
 
 <script>
   import store from './stores/AppDataStore.js';
-  import { setOutputState } from './rest/OctoConnection.js';
-  import { runJob } from './stores/StoreManager.js'
 
   export default {
     components: { 
@@ -97,19 +95,10 @@
     methods: {
       close(kill) {
         if(kill===true){           
-          this.killActiveOutputs().then(() => runJob('outputStates'));
+          this.store.killPower();
         }
         this.set({showDialog:false});
       },
-      killActiveOutputs() {
-        return Promise.all(this.activeOutputsIds().map( id => setOutputState(id,false) ));
-      },
-      activeOutputsIds() {
-        return store.get()
-             .outputStates
-             .filter( state => state.status )
-             .map( state => state.index_id );
-      }
     }
   };
 </script>

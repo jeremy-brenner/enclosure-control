@@ -1,3 +1,4 @@
+let interval;
 const jobs = []
 
 function runnableJobs() {
@@ -16,12 +17,6 @@ function runJobs() {
   });
 }
 
-function runJob(jobId) {
-  return jobs.find(job => job.id === jobId).run();
-}
-
-let interval;
-
 function start() {
   interval = setInterval(runJobs, 100);
 }
@@ -37,5 +32,5 @@ function addJob(job) {
 start();
 
 export {
-  start, stop, addJob, runJob
+  start, stop, addJob
 }

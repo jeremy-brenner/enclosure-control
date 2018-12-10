@@ -60,14 +60,14 @@
 <script>
   import store from './stores/AppDataStore.js';
   import { addJob } from './stores/StoreManager.js';
-  import { ConfJob, Md5Job, ApiVersionJob, ConnectionStateJob, PrinterStateJob, OutputStatesJob } from './jobs';
+  import Job from './stores/Job.js';
  
-  addJob(new ConfJob(store));
-  addJob(new Md5Job(store));
-  addJob(new ApiVersionJob(store));
-  addJob(new ConnectionStateJob(store));
-  addJob(new PrinterStateJob(store));
-  addJob(new OutputStatesJob(store));
+  addJob(new Job('conf', [], () => store.updateConf() ));
+  addJob(new Job('md5', [], () => store.updateMd5() ));
+  addJob(new Job('apiVersion', ['conf'], () => store.updateApiVersion() ));
+  addJob(new Job('connectionState', ['conf', 'apiVersion'], () => store.updateConnectionState() ));
+  addJob(new Job('outputStates', ['conf', 'apiVersion'], () => store.updateOutputStates() ));
+  addJob(new Job('printerState', ['conf', 'connectionState', 'apiVersion'], () => store.updatePrinterState() ));
 
   export default {
     store: () => store,

@@ -1,21 +1,12 @@
 <div class='center-column'>
   <div class='center-row'>
     <div id='printer-connection-dialog'>
-      {#if !connecting}
       <div class='message'>
         Printer not connected.
       </div>
-      <div class='button' on:click="connect()">
+      <div class='button' on:click="$connectToPrinter()">
         connect
       </div>
-      {:else}
-        <div class='message'>
-          Connecting...
-        </div>
-        <div class='button pressed'>
-          connect
-        </div>
-      {/if}
     </div>
   </div>
 </div>
@@ -46,20 +37,3 @@
     flex: 0 1 100%;
   }
 </style>
-
-<script>
-  import { runJob } from './stores/StoreManager.js';
-  import { connectToPrinter } from './rest/OctoConnection.js';
-
-  export default {
-    data: () => ({
-      connecting: false
-    }),
-    methods: {
-      connect() {
-        connectToPrinter()
-          .then(() => runJob('connectionState'));
-      }
-    }
-  }
-</script>
