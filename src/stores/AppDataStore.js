@@ -57,7 +57,18 @@ const defaults = {
   printerState: {
     temperature: {
       history: []
+    },
+    state: {
+      flags: {
+
+      }
     }
+  },
+  apiVersion: {
+
+  },
+  appMd5: {
+    
   },
   connectionState: {
     current: {
