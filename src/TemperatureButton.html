@@ -1,4 +1,4 @@
-<div class='control button' class:active on:click='set({activeButton:nextState})'>
+<div class='control button' class:active on:click='$set({activeTemperatureButton:nextState})'>
   <svelte:component this="{icons[icon]}"/>
   <div class='temp'>
       { actual } / { target }
@@ -23,25 +23,26 @@
 
 </style>
 <script>  
-    import icons from './icons';
+  import icons from './icons';
+  import store from './stores/AppDataStore.js'
 
   export default {
+    store: () => store,
      data: () => ({
        name: '',
        key: '',
        temperature: {},
-       activeButton: false,
        icons
      }),
      computed: {
        actual({temperature, key}) {
-         return temperature[key].actual;
+         return temperature[key] ? temperature[key].actual: 0;
        }, 
        target({temperature, key}) {
-         return temperature[key].target;
+         return temperature[key] ? temperature[key].target: 0;
        },
-       active({activeButton, key}) {
-         return activeButton == key;
+       active({$activeTemperatureButton, key}) {
+         return $activeTemperatureButton == key;
        },
        nextState({active, key}) {
          return active ? false : key

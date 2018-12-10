@@ -2,8 +2,8 @@
   <svg ref:svg preserveAspectRatio="none" viewBox="0 0 800 300">
     <g transform="translate(0,300)">
       <g transform="scale(1,-1)">
-        {#each temperatureControls(confStore) as control}
-          <TemperatureChartPath color='{control.color}' history={getHistory($temperature.history, control.key)}/>
+        {#each $conf.temperatureControls as control}
+          <TemperatureChartPath color='{control.color}' history={getHistory($printerState.temperature.history, control.key)}/> 
         {/each}	
 		  </g>
   	</g>
@@ -26,26 +26,19 @@
 </style>
 
 <script>
-	import printerStateStore from './stores/PrinterStateStore.js';
-  import confStore from './stores/ConfStore.js';
+	import store from './stores/AppDataStore.js';
   
   export default {
 		components: {
 			TemperatureChartPath: './TemperatureChartPath.html'
     },
-    data: () => ({
-      confStore: confStore
-    }),
     helpers: {
-      temperatureControls(confStore) {
-        return confStore.get().temperatureControls;
-      },
       getHistory(history, key) {
         return history
           .map(data => ({ ...data[key], time: data.time }))
           .filter(data => data.hasOwnProperty('actual') && data.hasOwnProperty('target'));
       }
     },
-    store: () => printerStateStore 
+    store: () => store 
   };
 </script>

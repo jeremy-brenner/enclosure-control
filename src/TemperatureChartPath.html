@@ -1,7 +1,9 @@
 <g>
-  <path class='actual-path' style='stroke: {color};' d='{actualPath}'></path>
-  <path class='target-path' style='stroke: {color};' d='{targetPath}'></path>
-  <path class='actual-area' style='fill: {color};' d='{actualArea}'></path>
+  {#if ready}
+    <path class='actual-path' style='stroke: {color};' d='{actualPath}'></path>
+    <path class='target-path' style='stroke: {color};' d='{targetPath}'></path>
+    <path class='actual-area' style='fill: {color};' d='{actualArea}'></path>
+  {/if}
 </g>
 
 <style>
@@ -40,6 +42,9 @@
         },
         xScale: ({ minX, maxX }) => {
           return linearScale(minX, maxX,0,800);
+        },
+        ready: ({history}) => {
+          return history.length > 0;
         },
         actualPath: ({ history, xScale }) => {
           return 'M' + history

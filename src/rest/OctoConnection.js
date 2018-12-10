@@ -1,4 +1,4 @@
-import confStore from '../stores/ConfStore.js';
+import appStore from '../stores/AppDataStore.js';
 
 function connectToPrinter() {
   return apiPost('/api/connection', {command: 'connect'});
@@ -46,21 +46,19 @@ function setOutputState(id,state) {
 }
 
 function apiGet(url) {
-  return fetch(`${confStore.get().host}${url}`, requestConfig())
-    .then(res => res.json())
-    .then(data => ({data, apiStatus:'Connected'}))
-    .catch(() => ({apiStatus:'Error'}));
+  return fetch(`${appStore.get().conf.host}${url}`, requestConfig())
+    .then(res => res.json());
 }
 
 function apiPost(url,data) {
-  return fetch(`${confStore.get().host}${url}`, requestConfig('POST',data));
+  return fetch(`${appStore.get().conf.host}${url}`, requestConfig('POST',data));
 }
 
 function requestConfig(method='GET',data) { 
   return {
     method,
     headers: {
-      'X-Api-Key': confStore.get().key,
+      'X-Api-Key': appStore.get().conf.key,
       'Content-Type': 'application/json'
     },
     body: data ? JSON.stringify(data) : undefined

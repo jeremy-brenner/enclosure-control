@@ -1,11 +1,22 @@
+
 <div id=app>
-  {#if $ready}
-    <EnclosureControl/>
+  <PowerBar/>
+  {#if $connectionState.current.state === 'Closed'}
+    <PrinterConnectionDialog/>
   {/if}
-  {#if $outOfDate}
-    <ReloadPage/>
+  {#if $connectionState.current.state === 'Operational'}
+    <div class='center-column'>
+      {#if $activeTemperatureButton}
+        <TemperatureSlider key={$activeTemperatureButton}/>
+      {/if}
+    </div>
+      <PrinterBar/>
   {/if}
 </div>
+<Cube/>
+
+<TemperatureChart/> 
+
 
 <style>
   #app {
@@ -15,23 +26,54 @@
     flex-flow: row nowrap;
     align-items: stretch;
   }
+  #error {
+      bottom: 0;
+      position: absolute;
+      font-size: 3em;
+      color: rgb(83, 17, 17);
+  }
 </style>
 
+
 <script>
-  import confStore from './stores/ConfStore.js'
+  import store from './stores/AppDataStore.js';
+  import { addJob } from './stores/StoreManager.js';
+  import { ConfJob, Md5Job, ApiVersionJob, ConnectionStateJob, PrinterStateJob, OutputStatesJob } from './jobs';
+ 
+  addJob(new ConfJob(store));
+  addJob(new Md5Job(store));
+  addJob(new ApiVersionJob(store));
+  addJob(new ConnectionStateJob(store));
+  addJob(new PrinterStateJob(store));
+  addJob(new OutputStatesJob(store));
 
   export default {
+    store: () => store,
+    data: () => ({
+      md5sum: false
+    }),
     components: { 
-      EnclosureControl: './EnclosureControl.html', 
-      ReloadPage: './ReloadPage.html'
+        PowerBar: './PowerBar.html', 
+        Cube: './Cube.html',
+        PrinterBar: './PrinterBar.html',
+        PrinterConnectionDialog: './PrinterConnectionDialog.html',
+        TemperatureChart: './TemperatureChart.html',
+        TemperatureSlider: './TemperatureSlider.html'
     },
-    store: () => confStore,
     oncreate() {
-      confStore.start();
-    },
-    ondestroy() {
-      confStore.stop();
+			const listener = this.store.on('state', ({ current }) => {
+        if( !current.appMd5 ) {
+          return;
+        }
+        if( !this.get().md5sum ) {
+          this.set(current.appMd5);
+        }
+        if( this.get().md5sum !== current.appMd5.md5sum ){
+          window.location.reload();
+        } 
+      });
+      this.on('destroy', listener.cancel);
     }
   }
-</script>
 
+</script>

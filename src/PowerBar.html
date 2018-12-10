@@ -1,27 +1,18 @@
 <div id="power-bar" class='side-column'>
-  {#each powerButtons as powerButton}
+  {#each $conf.powerButtons as powerButton}
     <PowerButton apiId={powerButton.apiId} icon={powerButton.icon}/>
   {/each}
   <KillButton/>
 </div>
 
 <script>
-  import powerStore from './stores/PowerStore.js'
-  import confStore from './stores/ConfStore.js'
+  import store from './stores/AppDataStore.js'
 
   export default {
     components: {
       PowerButton: './PowerButton.html', 
       KillButton: './KillButton.html'
     },
-    data: () => ({
-      powerButtons: confStore.get().powerButtons
-    }),
-    oncreate() {
-      powerStore.start();
-    },
-    ondestroy() {
-      powerStore.stop();
-    }
+    store: () => store
   };
 </script>      

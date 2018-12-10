@@ -1,31 +1,16 @@
-
-{#if activeButton}
-<TemperatureSlider key={activeButton}/>
-{/if}
 <div id="printer-bar" class='side-column'>
-  {#each temperatureControls(confStore) as control}
-    <TemperatureButton name='{control.name}' key='{control.key}' icon='{control.icon}' temperature='{$temperature}' bind:activeButton/>
+  {#each $conf.temperatureControls as control}
+    <TemperatureButton name='{control.name}' key='{control.key}' icon='{control.icon}' temperature='{$printerState.temperature}'/>
   {/each}
 </div>
 
 <script>
-    import printerStateStore from './stores/PrinterStateStore.js';
-    import confStore from './stores/ConfStore.js';
+    import store from './stores/AppDataStore.js';
 
     export default {
-      store: () => printerStateStore,
-      data: () => ({
-        activeButton: false,
-        confStore: confStore
-      }),
-      helpers: {
-        temperatureControls(confStore) {
-          return confStore.get().temperatureControls;
-        }
-      },
+      store: () => store,
       components: {
         TemperatureButton: './TemperatureButton.html', 
-        TemperatureSlider: './TemperatureSlider.html',
       }
     }
 </script>

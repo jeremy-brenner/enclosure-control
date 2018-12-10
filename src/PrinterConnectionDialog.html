@@ -1,0 +1,65 @@
+<div class='center-column'>
+  <div class='center-row'>
+    <div id='printer-connection-dialog'>
+      {#if !connecting}
+      <div class='message'>
+        Printer not connected.
+      </div>
+      <div class='button' on:click="connect()">
+        connect
+      </div>
+      {:else}
+        <div class='message'>
+          Connecting...
+        </div>
+        <div class='button pressed'>
+          connect
+        </div>
+      {/if}
+    </div>
+  </div>
+</div>
+
+<style>
+  #printer-connection-dialog {
+    flex-direction: row;
+    flex-wrap: wrap;
+    z-index: 20;
+    margin: auto;
+    width: 90%;
+    font-size: 10vh;
+    background: rgba(44,58,78,0.9);
+    box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+  }
+
+  .message {
+    color: rgb(83, 17, 17);
+    text-align: center;
+    flex: 0 1 100%;
+  }
+
+  .button {
+    box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+    background: rgba(44,58,78,0.8);
+    color: rgba(24,38,58);
+    text-align: center;
+    flex: 0 1 100%;
+  }
+</style>
+
+<script>
+  import { runJob } from './stores/StoreManager.js';
+  import { connectToPrinter } from './rest/OctoConnection.js';
+
+  export default {
+    data: () => ({
+      connecting: false
+    }),
+    methods: {
+      connect() {
+        connectToPrinter()
+          .then(() => runJob('connectionState'));
+      }
+    }
+  }
+</script>
