@@ -4,6 +4,27 @@ function connectToPrinter() {
   return apiPost('/api/connection', {command: 'connect'});
 }
 
+function moveTo(x,y,z) {
+  return apiPost(
+    '/api/printer/printhead',
+    {
+      command: "jog",
+      absolute: "true",
+      x, y, z
+    }
+  );
+}
+
+function home(axes) {
+  return apiPost(
+    '/api/printer/printhead',
+    {
+      command: "home",
+      axes
+    }
+  );
+}
+
 function getApiVersion() {
   return apiGet('/api/version');
 }
@@ -69,6 +90,8 @@ function requestConfig(method='GET',data) {
 export {
   connectToPrinter,
   setTemp,
+  moveTo,
+  home,
   getApiVersion,
   getConnectionState,
   getPrinterState,
