@@ -45,7 +45,6 @@ body {
 }
 
 .top-row {
-  height: 20vh;
   flex: 0 0 auto;
 }
 
@@ -55,7 +54,6 @@ body {
 }
 
 .bottom-row {
-  height: 20vh;
   flex: 0 0 auto;
 }
 

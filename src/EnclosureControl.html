@@ -9,6 +9,10 @@
         <TemperatureSlider key={$activeTemperatureButton}/>
       {:else}
         <TopBar/>
+        <div class='center-row'>
+          
+        </div>
+        <BottomBar/>
       {/if}
     </div>
     <PrinterBar/>
@@ -34,6 +38,7 @@
         PowerBar: './PowerBar.html', 
         PrinterBar: './PrinterBar.html',
         TopBar: './TopBar.html',
+        BottomBar: './BottomBar.html',
         PrinterConnectionDialog: './PrinterConnectionDialog.html',
         TemperatureSlider: './TemperatureSlider.html'
     },

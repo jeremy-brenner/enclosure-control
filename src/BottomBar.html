@@ -1,0 +1,27 @@
+<div class='bottom-row control'>
+  Print Time: {elapsed}
+  Print Time Left: {remaining}
+</div>
+      
+<style>
+  .bottom-row {
+    font-size: 4.5vh;
+  }
+</style>
+
+<script>
+  import store from './stores/AppDataStore.js';
+  import moment from 'moment';
+
+export default {
+  store: () => store,
+  computed: {
+    elapsed({$jobState}) {
+      return moment.utc(moment.duration($jobState.progress.printTime, "seconds").asMilliseconds()).format("HH:mm:ss");
+    },
+    remaining({$jobState}) {
+      return moment.duration($jobState.progress.printTimeLeft, "seconds").humanize();
+    } 
+  }
+}
+</script>

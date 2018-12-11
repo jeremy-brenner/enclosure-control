@@ -1,4 +1,4 @@
-<div class='top-row'>
+<div class='top-row control'>
   {$jobState.state}
   {$jobState.job.file.display}
 </div>
@@ -10,7 +10,7 @@
 </style>
 <script>
   import store from './stores/AppDataStore.js';
-      
+
   export default {
     store: () => store,
   }
