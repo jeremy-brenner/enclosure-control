@@ -1,0 +1,39 @@
+
+<div id=enclosure-control>
+  <PowerBar/>
+  {#if $connectionState.current.state === 'Closed'}
+    <PrinterConnectionDialog/>
+  {/if}
+  {#if $connectionState.current.state === 'Operational'}
+    <div class='center-column'>
+      {#if $activeTemperatureButton}
+        <TemperatureSlider key={$activeTemperatureButton}/>
+      {/if}
+    </div>
+      <PrinterBar/>
+  {/if}
+</div>
+  
+<style>
+  #enclosure-control {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+  }
+</style>
+  
+<script>
+  import store from './stores/AppDataStore.js';
+
+  export default {
+    store: () => store,
+    components: { 
+        PowerBar: './PowerBar.html', 
+        PrinterBar: './PrinterBar.html',
+        PrinterConnectionDialog: './PrinterConnectionDialog.html',
+        TemperatureSlider: './TemperatureSlider.html'
+    },
+  }
+</script>

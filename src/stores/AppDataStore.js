@@ -3,21 +3,21 @@ import { getApiVersion, getConnectionState, getOutputStates, getPrinterState, se
 import { getConf, getAppMd5 } from '../rest/LocalConnection.js'
 
 class AppDataStore extends Store {
-  updateApiVersion() {
-    return getApiVersion()
-      .then((apiVersion) => this.set({apiVersion}));
-  }
   updateConf() {
     return getConf()
       .then(conf => this.set({conf}));
   }
-  updateConnectionState() {
-    return getConnectionState()
-      .then((connectionState) => this.set({connectionState}));
-  }
   updateMd5() {
     return getAppMd5()
       .then(appMd5 => this.set({appMd5}));
+  }
+  updateApiVersion() {
+    return getApiVersion()
+      .then((apiVersion) => this.set({apiVersion}));
+  }
+  updateConnectionState() {
+    return getConnectionState()
+      .then((connectionState) => this.set({connectionState}));
   }
   updateOutputStates() {
     return getOutputStates()
