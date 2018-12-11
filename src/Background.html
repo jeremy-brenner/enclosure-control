@@ -1,6 +1,6 @@
 <div id="perspective">
   <div id="pane">
-    <Cube height=0 pulse='true'/>
+    <Cube height={$jobState.progress.completion} pulse='true'/>
     <Cube height=100/>
   </div>
 </div>
@@ -25,7 +25,10 @@
   
 
 <script>   
+  import store from './stores/AppDataStore.js'
+
   export default {
+    store: () => store,
     components: { 
         Cube: './Cube.html',
     }

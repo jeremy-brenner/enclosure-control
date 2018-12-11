@@ -14,6 +14,7 @@
   addJob(new Job('connectionState', ['conf', 'apiVersion'], () => store.updateConnectionState() ));
   addJob(new Job('outputStates', ['conf', 'apiVersion'], () => store.updateOutputStates() ));
   addJob(new Job('printerState', ['conf', 'connectionState', 'apiVersion'], () => store.updatePrinterState() ));
+  addJob(new Job('jobState', ['conf', 'connectionState', 'apiVersion'], () => store.updateJobState() ));
 
   export default {
     store: () => store,
@@ -26,14 +27,16 @@
         TemperatureChart: './TemperatureChart.html',
     },
     oncreate() {
+      let md5sum;
+      console.log(store);
 			const listener = this.store.on('state', ({ current }) => {
-        if( !current.appMd5 ) {
+        if( !current.appMd5.md5sum ) {
           return;
         }
-        if( !this.get().md5sum ) {
-          this.set(current.appMd5);
+        if( !md5sum ) {
+          md5sum = current.appMd5.md5sum;
         }
-        if( this.get().md5sum !== current.appMd5.md5sum ){
+        if( md5sum !== current.appMd5.md5sum ){
           window.location.reload();
         } 
       });

@@ -3,14 +3,15 @@
   <PowerBar/>
   {#if $connectionState.current.state === 'Closed'}
     <PrinterConnectionDialog/>
-  {/if}
-  {#if $connectionState.current.state === 'Operational'}
+  {:else}
     <div class='center-column'>
       {#if $activeTemperatureButton}
         <TemperatureSlider key={$activeTemperatureButton}/>
+      {:else}
+        <TopBar/>
       {/if}
     </div>
-      <PrinterBar/>
+    <PrinterBar/>
   {/if}
 </div>
   
@@ -32,8 +33,12 @@
     components: { 
         PowerBar: './PowerBar.html', 
         PrinterBar: './PrinterBar.html',
+        TopBar: './TopBar.html',
         PrinterConnectionDialog: './PrinterConnectionDialog.html',
         TemperatureSlider: './TemperatureSlider.html'
     },
+    computed: {
+
+    }
   }
 </script>

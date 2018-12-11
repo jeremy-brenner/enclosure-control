@@ -10,8 +10,7 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  overflow: hidden;
   background: radial-gradient(#ccc, #54958A, #2C3A4E);
   font-family: 'Lato', sans-serif;
 }

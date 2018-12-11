@@ -1,0 +1,17 @@
+<div class='top-row'>
+  {$jobState.state}
+  {$jobState.job.file.display}
+</div>
+
+<style>
+  .top-row {
+    font-size: 4.5vh;
+  }
+</style>
+<script>
+  import store from './stores/AppDataStore.js';
+      
+  export default {
+    store: () => store,
+  }
+</script>

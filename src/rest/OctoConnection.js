@@ -66,6 +66,10 @@ function setOutputState(id,state) {
   return apiGet(`/plugin/enclosure/setIO?status=${state}&index_id=${id}`);
 }
 
+function getJobState() {
+  return apiGet('/api/job');
+}
+
 function apiGet(url) {
   return fetch(`${appStore.get().conf.host}${url}`, requestConfig())
     .then(res => res.json());
@@ -96,5 +100,6 @@ export {
   getConnectionState,
   getPrinterState,
   getOutputStates,
-  setOutputState
+  setOutputState,
+  getJobState
 };

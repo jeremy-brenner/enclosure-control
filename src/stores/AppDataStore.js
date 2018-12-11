@@ -1,5 +1,5 @@
 import { Store } from 'svelte/store.js';
-import { getApiVersion, getConnectionState, getOutputStates, getPrinterState, setOutputState, connectToPrinter, setTemp } from '../rest/OctoConnection.js';
+import { getApiVersion, getConnectionState, getOutputStates, getPrinterState, setOutputState, connectToPrinter, setTemp, getJobState } from '../rest/OctoConnection.js';
 import { getConf, getAppMd5 } from '../rest/LocalConnection.js'
 
 class AppDataStore extends Store {
@@ -26,6 +26,10 @@ class AppDataStore extends Store {
   updatePrinterState() {
     return getPrinterState('history=true&limit=1000')
       .then(printerState => this.set({printerState}));
+  }
+  updateJobState() {
+    return getJobState()
+      .then((jobState) => this.set({jobState}));
   }
   setOutputState(id,state) {
     return setOutputState(id,state)
@@ -75,7 +79,17 @@ const defaults = {
       
     }
   },
-  outputStates: []
+  outputStates: [],
+  jobState: {
+    job: {
+      file: {
+        
+      }
+    },
+    progress: {
+
+    }
+  }
 }
 
 export default new AppDataStore(defaults);
