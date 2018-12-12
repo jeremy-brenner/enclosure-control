@@ -1,0 +1,24 @@
+<div class='control button' class:active on:click='$set({activePrinterButton:nextState})'>
+    <svelte:component this="{icons[icon]}"/>
+</div>
+
+<script>
+  import icons from './icons';
+  import store from './stores/AppDataStore.js';
+
+  export default {
+    store: () => store,
+    data: () => ({
+      key: '',
+      icons
+    }),
+    computed: {
+      active({$activePrinterButton, key}) {
+        return $activePrinterButton == key;
+      },
+      nextState({active, key}) {
+        return active ? 'JobInfo' : key
+      }
+    }
+  }
+</script>

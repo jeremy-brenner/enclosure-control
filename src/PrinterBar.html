@@ -1,7 +1,6 @@
-<div id="printer-bar" class='side-column'>
-  {#each $conf.temperatureControls as control}
-    <TemperatureButton name='{control.name}' key='{control.key}' icon='{control.icon}' temperature='{$printerState.temperature}'/>
-  {/each}
+<div id="printer-bar" class='side-column flex-vertical'>
+  <PrinterButton icon='ThermometerIcon' key='TemperatureControls' />
+  <PrinterButton icon='MoveIcon' key='MoveControls'/>
 </div>
 
 <script>
@@ -10,7 +9,7 @@
     export default {
       store: () => store,
       components: {
-        TemperatureButton: './TemperatureButton.html', 
+        PrinterButton: './PrinterButton.html', 
       }
     }
 </script>

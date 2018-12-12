@@ -18,25 +18,28 @@ body {
 #app {
   width: 100vw;
   height: 100vh;
+}
+
+.flex-horizontal {
   display: flex;
   flex-flow: row nowrap;
+  align-items: stretch;
+}
+
+.flex-vertical {
+  display: flex;
+  flex-flow: column nowrap;
   align-items: stretch;
 }
 
 .side-column {
   width: 25vh;
   flex: 0 0 auto;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
 }
 
 .center-column {
   width: 100%;
   flex: 0 1 auto;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
 }
 
 .side-column .button {

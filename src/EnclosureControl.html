@@ -1,19 +1,11 @@
 
-<div id=enclosure-control>
+<div id=enclosure-control class='flex-horizontal'>
   <PowerBar/>
   {#if $connectionState.current.state === 'Closed'}
     <PrinterConnectionDialog/>
   {:else}
     <div class='center-column'>
-      {#if $activeTemperatureButton}
-        <TemperatureSlider key={$activeTemperatureButton}/>
-      {:else}
-        <TopBar/>
-        <div class='center-row'>
-          
-        </div>
-        <BottomBar/>
-      {/if}
+      <svelte:component this="{dynamicComponents[$activePrinterButton]}"/>
     </div>
     <PrinterBar/>
   {/if}
@@ -31,16 +23,22 @@
   
 <script>
   import store from './stores/AppDataStore.js';
+  import JobInfo from './JobInfo.html';
+  import MoveControls from './MoveControls.html';
+  import TemperatureControls from './TemperatureControls.html';
+
 
   export default {
     store: () => store,
+    data: () => ({
+      dynamicComponents: {
+        JobInfo, MoveControls, TemperatureControls
+      }
+    }),
     components: { 
         PowerBar: './PowerBar.html', 
         PrinterBar: './PrinterBar.html',
-        TopBar: './TopBar.html',
-        BottomBar: './BottomBar.html',
         PrinterConnectionDialog: './PrinterConnectionDialog.html',
-        TemperatureSlider: './TemperatureSlider.html'
     },
     computed: {
 
