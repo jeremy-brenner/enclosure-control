@@ -1,66 +1,39 @@
-<div class='slider control side-column'>
-  <div class='value'>
-    {xValue}, {yValue}
-  </div>
+<div class='slider column'>
   <div ref:slideArea class='slide-area' class:circular on:click="click(event)">
       <div class='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" on:dragend="dragend(event)" style='top: {handleYPosition}%; left: {handleXPosition}%;'></div>
   </div> 
-  <div class='name'>
-    {name}
-  </div>
 </div>
   
 <style>
-.slider {
-  height: 100vh;
-  width: 90vh;
-  font-size: 4.5vh;
-  text-align: center;
-  position: relative;
-}
+    
+  .slider {
+    height: 82vh;
+    width: 82vh;
+    font-size: 4.5vh;
+    text-align: center;
+    position: relative;
+  }
 
-.slider .value {
-  top: 1vh;
-  position: absolute;
-  width: 100%;
-}
+  .slider .slide-area {
+    position: absolute;
+    top: 2.5%;
+    left: 2.5%;
+    width: 95%;
+    height: 95%;
+    border: 0.5vh solid rgb(24,38,58); 
+  }
 
-.slider .name {
-  bottom: 0;
-  position: absolute;
-  width: 100%;
-}
+  .slider .slide-area.circular {
+    border-radius: 50%;
+  }
 
-.slider .slide-area {
-  position: absolute;
-  top: 7vh;
-  left: 6vh;
-  width: 80vh;
-  height: 80vh;
-  border: 0.5vh solid rgb(24,38,58); 
-  /* background-color: rgb(24,38,58); */
-}
-
-.slider .slide-area.circular {
-  border-radius: 50%;
-}
-
-.slider .track {
-  position: relative; 
-  left: 6vh; 
-  width: 1vh;
-  height: 100%;
-  background-color: rgb(24,38,58);
-}
-
-.slider .handle {
-  position: relative;
-  width: 5vh;
-  height: 5vh;
-  left: 40vh;
-  box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
-  background: rgba(44,58,78,0.8);
-}
+  .slider .handle {
+    position: relative;
+    width: 5%;
+    height: 5%;
+    box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+    background: rgba(44,58,78,0.8);
+  }
 </style>
 
 
@@ -105,21 +78,29 @@
           return Math.floor(sliderMulti*this.get().xRangeDistance) + this.get().minXValue;
         },
         sliderPosY(y) {
-          let sliderMulti = 1-(y-this.refs.slideArea.offsetTop)/this.refs.slideArea.clientHeight
+          const offsetTop = this.refs.slideArea.offsetTop + this.refs.slideArea.offsetParent.offsetTop;
+          let sliderMulti = 1-(y-offsetTop)/this.refs.slideArea.clientHeight
           sliderMulti = sliderMulti < 1 ? sliderMulti : 1;
           sliderMulti = sliderMulti > 0 ? sliderMulti : 0;  
           return Math.floor(sliderMulti*this.get().yRangeDistance) + this.get().minYValue;
         },
         updateSelf(x,y){
           if(y==0 || x==0) {return;}
-          this.set({
-            xValue: this.sliderPosX(x),
-            yValue: this.sliderPosY(y)
-          });
+          const xValue = this.sliderPosX(x);
+          const yValue = this.sliderPosY(y);
+          if(this.get().circular && !this.withinCircle(xValue,yValue)) {
+            return;
+          }
+          this.set({ xValue, yValue });
+        },
+        withinCircle(x,y) {
+          const r = Math.sqrt(x*x+y*y);
+          return r <= this.get().maxXValue && r <= this.get().maxYValue;
         },
         fireChange() {
-          const { key, xValue, yValue } = this.get();
-          this.fire('change', {key, xValue, yValue});
+          const { xValue, yValue } = this.get();
+          this.fire('change', { key: 'x', value: xValue });
+          this.fire('change', { key: 'y', value: yValue });
         },
         click({x,y}) {
           this.updateSelf(x,y);

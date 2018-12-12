@@ -1,17 +1,61 @@
 <div class='center-row flex-horizontal'>
   <div class='center-column'></div>
-  <Slider2d name='x, y' shape={volume.formFactor} initialXValue=0 initialYValue=0  minXValue={minXValue} minYValue={minYValue} maxXValue={maxXValue} maxYValue={maxYValue}/>
-  <Slider name='z' initialValue=0 maxValue={volume.height}/>
+  <div class='column flex-vertical'>
+    <div class='top-bar flex-horizontal row control'>
+      <div id='position'>
+        X: {x} Y: {y} Z: {z}
+      </div>
+      <div id='go-button' class='button control' on:click="doMove()">
+        <CheckMarkIcon/>
+      </div>
+      <div id='home-button' class='button control' on:click="doHome()">
+        <HomeIcon/>
+      </div>
+    </div>
+    <div class='row control flex-horizontal'>
+      <Slider2d name='x, y' shape={volume.formFactor} initialXValue={x} initialYValue={x}  minXValue={minXValue} minYValue={minYValue} maxXValue={maxXValue} maxYValue={maxYValue} on:change="set({[event.key]:event.value})"/>
+      <Slider key='z' name='z' initialValue={z} maxValue={volume.height} on:change="set({[event.key]:event.value})"/>
+    </div>
+  </div>
 </div>
+
+<style>
+  #position {
+    font-size: 4.5vh;
+    flex-grow: 1; 
+  }
+  .top-bar {
+    height: 18vh;
+    align-items: center;
+    padding: 2vh;
+  }
+  .button {
+    width: 15vh;
+    height: 15vh;
+    margin-left: 2vh;
+  }
+</style>
 
 <script>
   import store from './stores/AppDataStore.js';
  
   export default {
     store: () => store,
+    data: () => ({ x: 0, y: 0, z: 0 }),
     components: { 
       Slider: './Slider.html',
-      Slider2d: './Slider2d.html'
+      Slider2d: './Slider2d.html',
+      HomeIcon: './icons/HomeIcon.html',
+      CheckMarkIcon: './icons/CHeckMarkIcon.html',
+    },
+    methods: {
+      doMove() {
+        const {x,y,z} = this.get();
+        console.log('moving', {x,y,z} );
+      },
+      doHome() {
+        console.log('homing');
+      }
     },
     computed: {
       volume({$conf, $printerProfiles}) {

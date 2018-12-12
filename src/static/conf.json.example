@@ -29,5 +29,6 @@
       "maxTemp": 150
     }
   ],
+  "printerProfile": "_default",
   "cubeSpin": true
 }

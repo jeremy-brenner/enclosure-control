@@ -37,6 +37,10 @@ body {
   flex: 0 0 auto;
 }
 
+.column {
+  flex: 0 0 auto;
+}
+
 .center-column {
   width: 100%;
   flex: 0 1 auto;
@@ -47,7 +51,7 @@ body {
   flex: 0 1 auto;
 }
 
-.top-row {
+.top-row, .row {
   flex: 0 0 auto;
 }
 

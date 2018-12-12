@@ -1,0 +1,42 @@
+<div class='temp-slider control side-column flex-vertical'>
+    <div class='value'>
+      {value}
+    </div>
+    <div class='slider'>
+    <Slider maxValue={maxValue} initialValue='{initialValue}' bind:value on:change="$setTemp(key,event)" />
+    </div>
+    <div class='name'>
+      {name}
+    </div>
+  </div>
+  
+  <style>
+    .temp-slider {
+      position: relative;
+    }
+    .slider {
+      margin-left: 5.5vh;
+    }
+    .value, .name {
+      height: 7vh;
+      font-size: 5vh;
+      text-align: center;
+      width: 100%;
+    }
+  </style>
+  
+  <script>  
+      export default {
+        data: () => ({
+          value: 0,
+          initialValue: 0
+        }),
+        oncreate() {
+          this.set({value: this.get().initialValue});
+        },
+        components: { 
+          Slider: './Slider.html'
+        }
+      }
+  </script>
+  
