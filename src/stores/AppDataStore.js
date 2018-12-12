@@ -1,5 +1,5 @@
 import { Store } from 'svelte/store.js';
-import { getApiVersion, getConnectionState, getOutputStates, getPrinterState, setOutputState, connectToPrinter, setTemp, getJobState } from '../rest/OctoConnection.js';
+import { getApiVersion, getConnectionState, getOutputStates, getPrinterState, setOutputState, connectToPrinter, setTemp, getJobState, getPrinterProfiles } from '../rest/OctoConnection.js';
 import { getConf, getAppMd5 } from '../rest/LocalConnection.js'
 
 class AppDataStore extends Store {
@@ -13,15 +13,15 @@ class AppDataStore extends Store {
   }
   updateApiVersion() {
     return getApiVersion()
-      .then((apiVersion) => this.set({apiVersion}));
+      .then(apiVersion => this.set({apiVersion}));
   }
   updateConnectionState() {
     return getConnectionState()
-      .then((connectionState) => this.set({connectionState}));
+      .then(connectionState => this.set({connectionState}));
   }
   updateOutputStates() {
     return getOutputStates()
-      .then((outputStates) => this.set({outputStates}));
+      .then(outputStates => this.set({outputStates}));
   }
   updatePrinterState() {
     return getPrinterState('history=true&limit=1000')
@@ -29,7 +29,11 @@ class AppDataStore extends Store {
   }
   updateJobState() {
     return getJobState()
-      .then((jobState) => this.set({jobState}));
+      .then(jobState => this.set({jobState}));
+  }
+  updatePrinterProfiles() {
+    return getPrinterProfiles()
+      .then(printerProfiles => this.set({printerProfiles}));
   }
   setOutputState(id,state) {
     return setOutputState(id,state)
@@ -54,6 +58,7 @@ class AppDataStore extends Store {
 }
 
 const defaults = {
+  activePrinterButton: 'JobInfo',
   conf: {
     powerButtons: [],
     temperatureControls: []
@@ -89,6 +94,9 @@ const defaults = {
     progress: {
 
     }
+  },
+  printerProfiles: {
+
   }
 }
 

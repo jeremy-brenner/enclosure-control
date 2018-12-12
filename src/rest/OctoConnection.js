@@ -49,6 +49,9 @@ function setToolTemp(key,temp) {
   });
 }
 
+function getPrinterProfiles() {
+  return apiGet('/api/printerprofiles');
+}
 
 function getConnectionState() {
   return apiGet('/api/connection');
@@ -101,5 +104,6 @@ export {
   getPrinterState,
   getOutputStates,
   setOutputState,
-  getJobState
+  getJobState,
+  getPrinterProfiles
 };
