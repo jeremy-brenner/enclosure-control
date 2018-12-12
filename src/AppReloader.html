@@ -1,0 +1,26 @@
+<script>
+    import store from './stores/AppDataStore.js';
+  
+    export default {
+      store: () => store,
+      data: () => ({
+        md5sum: false,
+      }),
+      oncreate() {
+        let md5sum;
+        const listener = this.store.on('state', ({ current }) => {
+          if( !current.appMd5.md5sum ) {
+            return;
+          }
+          if( !md5sum ) {
+            md5sum = current.appMd5.md5sum;
+          }
+          if( md5sum !== current.appMd5.md5sum ){
+            window.location.reload();
+          } 
+        });
+        this.on('destroy', listener.cancel);
+      }
+    }
+  
+  </script>

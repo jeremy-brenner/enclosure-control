@@ -2,46 +2,17 @@
 <EnclosureControl/>
 <Background/>
 <TemperatureChart/> 
+<StoreManager/>
+<AppReloader/>
 
 <script>
-  import store from './stores/AppDataStore.js';
-  import { addJob } from './stores/StoreManager.js';
-  import Job from './stores/Job.js';
- 
-  addJob(new Job('conf', [], () => store.updateConf() ));
-  addJob(new Job('md5', [], () => store.updateMd5() ));
-  addJob(new Job('apiVersion', ['conf'], () => store.updateApiVersion() ));
-  addJob(new Job('connectionState', ['conf', 'apiVersion'], () => store.updateConnectionState() ));
-  addJob(new Job('outputStates', ['conf', 'apiVersion'], () => store.updateOutputStates() ));
-  addJob(new Job('printerState', ['conf', 'connectionState', 'apiVersion'], () => store.updatePrinterState() ));
-  addJob(new Job('jobState', ['conf', 'connectionState', 'apiVersion'], () => store.updateJobState() ));
-
   export default {
-    store: () => store,
-    data: () => ({
-      md5sum: false,
-    }),
     components: { 
         EnclosureControl: './EnclosureControl.html', 
         Background: './Background.html',
         TemperatureChart: './TemperatureChart.html',
-    },
-    oncreate() {
-      let md5sum;
-      console.log(store);
-			const listener = this.store.on('state', ({ current }) => {
-        if( !current.appMd5.md5sum ) {
-          return;
-        }
-        if( !md5sum ) {
-          md5sum = current.appMd5.md5sum;
-        }
-        if( md5sum !== current.appMd5.md5sum ){
-          window.location.reload();
-        } 
-      });
-      this.on('destroy', listener.cancel);
+        AppReloader: './AppReloader.html',
+        StoreManager: './StoreManager.html'
     }
   }
-
 </script>

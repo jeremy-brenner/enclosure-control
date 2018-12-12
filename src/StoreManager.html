@@ -1,0 +1,45 @@
+<script>
+  import store from './stores/AppDataStore.js';
+  import Job from './stores/Job.js';
+  
+  const jobs = [
+    new Job('conf', [], () => store.updateConf() ), 
+    new Job('md5', [], () => store.updateMd5() ),
+    new Job('apiVersion', ['conf'], () => store.updateApiVersion() ),
+    new Job('connectionState', ['conf', 'apiVersion'], () => store.updateConnectionState() ),
+    new Job('outputStates', ['conf', 'apiVersion'], () => store.updateOutputStates() ),
+    new Job('printerState', ['conf', 'connectionState', 'apiVersion'], () => store.updatePrinterState() ),
+    new Job('jobState', ['conf', 'connectionState', 'apiVersion'], () => store.updateJobState() ),
+    new Job('printerProfiles', ['conf', 'connectionState', 'apiVersion'], () => store.updatePrinterProfiles() ),
+  ];
+
+console.log(store);
+  export default {
+    data: () => ({
+      jobs
+    }),
+    store: () => store,
+    methods: {
+      runJobs() {
+        this.runnableJobs().forEach( (job) => {
+          job.run();
+        });
+      },
+      runnableJobs() {
+        return this.get().jobs.filter(job => job.canRun(this.okJobIds()));   
+      },
+      okJobIds() {
+        return this.get().jobs
+          .filter(job => job.status === 'Ok')
+          .map(job => job.id); 
+      }
+    },
+    oncreate() {
+      this.set({interval: setInterval(() => this.runJobs(), 100) });
+    },
+    ondestroy() {
+      clearInterval(this.get().interval);
+    }
+  }
+
+  </script>
