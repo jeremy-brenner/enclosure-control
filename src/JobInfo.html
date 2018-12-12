@@ -1,0 +1,19 @@
+<TopBar/>
+<div class='center-row'>  
+</div>
+<BottomBar/>
+
+<script>
+    import store from './stores/AppDataStore.js';
+  
+    export default {
+      store: () => store,
+      components: { 
+          TopBar: './TopBar.html',
+          BottomBar: './BottomBar.html'
+      },
+      computed: {
+  
+      }
+    }
+ </script>

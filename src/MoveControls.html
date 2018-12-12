@@ -1,0 +1,15 @@
+<div class='center-row flex-horizontal'>
+  <div class='center-column'></div>
+  <Slider name='z' initialValue=0 maxValue={$printerProfiles.profiles._default.volume.height}/>
+</div>
+
+<script>
+  import store from './stores/AppDataStore.js';
+ 
+  export default {
+    store: () => store,
+    components: { 
+      Slider: './Slider.html'
+    }
+  }
+</script>
