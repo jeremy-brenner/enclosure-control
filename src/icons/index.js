@@ -6,6 +6,8 @@ import CancelIcon from './CancelIcon.html';
 import CheckMarkIcon from './CheckMarkIcon.html';
 import BedTemperatureIcon from './BedTemperatureIcon.html';
 import ToolTemperatureIcon from './ToolTemperatureIcon.html';
+import MoveIcon from './MoveIcon.html';
+import ThermometerIcon from './ThermometerIcon.html';
 
 export default {
   LightBulbIcon,
@@ -15,5 +17,7 @@ export default {
   CancelIcon,
   CheckMarkIcon,
   BedTemperatureIcon,
-  ToolTemperatureIcon
+  ToolTemperatureIcon,
+  MoveIcon,
+  ThermometerIcon,
 };
