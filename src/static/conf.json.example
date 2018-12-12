@@ -2,29 +2,31 @@
   "host": "http://localhost:5000",
   "key": "octoprintkey",
   "powerButtons": [
-     {
-       "apiId": 2,
-       "icon": "LightBulbIcon"
-     },
-     {
-       "apiId": 3,
-       "icon": "FanIcon"
-     },
-     { 
-       "apiId": 1,
-       "icon": "PrinterIcon"
-     }
+    {
+      "apiId": 2,
+      "icon": "LightBulbIcon"
+    },
+    {
+      "apiId": 3,
+      "icon": "FanIcon"
+    },
+    { 
+      "apiId": 1,
+      "icon": "PrinterIcon"
+    }
   ],
   "temperatureControls": [
     {
       "key": "tool0",
       "name": "Hotend",
-      "icon": "BedIcon"
+      "color": "#FF0000",
+      "maxTemp": 300
     },
     {
       "key": "bed",
       "name": "Bed",
-      "icon": "BedIcon"
+      "color": "#0000FF",
+      "maxTemp": 150
     }
   ],
   "cubeSpin": true

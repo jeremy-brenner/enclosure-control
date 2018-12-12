@@ -1,7 +1,7 @@
 <div class='center-row flex-horizontal'>
   <div class='center-column'></div>
   {#each $conf.temperatureControls as control}
-    <Slider name='{control.name}' key='{control.key}' maxValue=300 initialValue='{targetTemp(control.key)}' on:change="$setTemp(event.key, event.value)" />
+    <Slider name='{control.name}' key='{control.key}' maxValue={control.maxTemp} initialValue='{targetTemp(control.key)}' on:change="$setTemp(event.key, event.value)" />
   {/each}
 </div>
 
