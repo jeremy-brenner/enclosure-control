@@ -1,0 +1,25 @@
+<div class='center-row flex-horizontal'>
+  <div class='center-column'></div>
+  {#each $conf.temperatureControls as control}
+    <Slider name='{control.name}' key='{control.key}' maxValue=300 initialValue='{targetTemp(control.key)}' on:change="$setTemp(event.key, event.value)" />
+  {/each}
+</div>
+
+<script>
+  import store from './stores/AppDataStore.js';
+  
+  export default {
+    store: () => store,
+    data: () => ({
+      newValue: {}
+    }),
+    helpers: {
+      targetTemp(key) {
+        return store.get().printerState.temperature[key].target;
+      }
+    },
+    components: { 
+      Slider: './Slider.html'
+    }
+  }
+</script>
