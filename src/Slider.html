@@ -2,9 +2,11 @@
     <div class='value'>
       {value}
     </div>
-    <div ref:track class='track'>
-      <div class='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" on:dragend="dragend(event)" style='top: {handlePosition}%;'></div>
-    </div>
+    <div ref:slideArea class='slide-area' on:click="click(event)">
+      <div class='track'>
+        <div class='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" on:dragend="dragend(event)" style='top: {handlePosition}%;'></div>
+      </div>
+   </div>
     <div class='name'>
       {name}
     </div>
@@ -31,12 +33,21 @@
       width: 100%;
     }
   
-    .slider .track {
+    .slider .slide-area {
       position: absolute;
       top: 7vh;
-      left: 12vh;
-      width: 1vh;
+      left: 6vh;
+      width: 12vh;
       height: 85vh;
+      /* border: 1px solid black; */
+      /* background-color: rgb(24,38,58); */
+    }
+  
+    .slider .track {
+      position: relative; 
+      left: 6vh; 
+      width: 1vh;
+      height: 100%;
       background-color: rgb(24,38,58);
     }
   
@@ -65,19 +76,32 @@
           }
         },
         methods: {
-          drag({y}){
+          sliderPos(y) {
+            let sliderMulti = 1-(y-this.refs.slideArea.offsetTop)/this.refs.slideArea.clientHeight
+            sliderMulti = sliderMulti < 1 ? sliderMulti : 1;
+            sliderMulti = sliderMulti > 0 ? sliderMulti : 0;  
+            return Math.floor(sliderMulti*this.get().maxValue);
+          },
+          updateSelf(y){
             if(y==0) {return;}
-            let sliderPos = 1-(y-this.refs.track.offsetTop)/this.refs.track.clientHeight
-            sliderPos = sliderPos < 1 ? sliderPos : 1;
-            sliderPos = sliderPos > 0 ? sliderPos : 0;   
-            this.set({value: Math.floor(sliderPos*this.get().maxValue)});
+            this.set({value: this.sliderPos(y) });
+          },
+          fireChange() {
+            const { key, value } = this.get();
+            this.fire('change', {key, value});
+          },
+          click({y}) {
+            this.updateSelf(y);
+            this.fireChange();
           },
           dragstart(e) {
             e.dataTransfer.setDragImage(document.createElement('img'), 0, 0);
           },
-          dragend(e) {
-            const { key, value } = this.get();
-            this.fire('change', {key, value});
+          drag({y}) {
+            this.updateSelf(y);
+          },
+          dragend() {
+            this.fireChange();
           }
         }
       }
