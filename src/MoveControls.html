@@ -1,6 +1,7 @@
 <div class='center-row flex-horizontal'>
   <div class='center-column'></div>
-  <Slider name='z' initialValue=0 maxValue={$printerProfiles.profiles._default.volume.height}/>
+  <Slider2d name='x, y' shape={volume.formFactor} initialXValue=0 initialYValue=0  minXValue={minXValue} minYValue={minYValue} maxXValue={maxXValue} maxYValue={maxYValue}/>
+  <Slider name='z' initialValue=0 maxValue={volume.height}/>
 </div>
 
 <script>
@@ -9,7 +10,25 @@
   export default {
     store: () => store,
     components: { 
-      Slider: './Slider.html'
+      Slider: './Slider.html',
+      Slider2d: './Slider2d.html'
+    },
+    computed: {
+      volume({$conf, $printerProfiles}) {
+        return $printerProfiles.profiles[$conf.printerProfile].volume;
+      },
+      maxXValue({volume}) {
+        return volume.origin === "center" ? volume.width/2 : volume.width;
+      },
+      maxYValue({volume}) {
+        return volume.origin === "center" ? volume.depth/2 : volume.depth;
+      },
+      minXValue({volume}) {
+        return volume.origin === "center" ? -volume.width/2 : 0;
+      },
+      minYValue({volume}) {
+        return volume.origin === "center" ? -volume.depth/2 : 0;
+      }
     }
   }
 </script>

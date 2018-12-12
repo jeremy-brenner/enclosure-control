@@ -65,7 +65,10 @@ const defaults = {
   },
   printerState: {
     temperature: {
-      history: []
+      history: [],
+      bed: {},
+      tool0: {},
+      tool1: {}
     },
     state: {
       flags: {
@@ -96,7 +99,11 @@ const defaults = {
     }
   },
   printerProfiles: {
-
+    profiles: {
+      _default: {
+        volume: {}
+      }
+    }
   }
 }
 

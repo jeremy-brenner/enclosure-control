@@ -1,0 +1,139 @@
+<div class='slider control side-column'>
+  <div class='value'>
+    {xValue}, {yValue}
+  </div>
+  <div ref:slideArea class='slide-area' class:circular on:click="click(event)">
+      <div class='handle' draggable=true on:dragstart="dragstart(event)" on:drag="drag(event)" on:dragend="dragend(event)" style='top: {handleYPosition}%; left: {handleXPosition}%;'></div>
+  </div> 
+  <div class='name'>
+    {name}
+  </div>
+</div>
+  
+<style>
+.slider {
+  height: 100vh;
+  width: 90vh;
+  font-size: 4.5vh;
+  text-align: center;
+  position: relative;
+}
+
+.slider .value {
+  top: 1vh;
+  position: absolute;
+  width: 100%;
+}
+
+.slider .name {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.slider .slide-area {
+  position: absolute;
+  top: 7vh;
+  left: 6vh;
+  width: 80vh;
+  height: 80vh;
+  border: 0.5vh solid rgb(24,38,58); 
+  /* background-color: rgb(24,38,58); */
+}
+
+.slider .slide-area.circular {
+  border-radius: 50%;
+}
+
+.slider .track {
+  position: relative; 
+  left: 6vh; 
+  width: 1vh;
+  height: 100%;
+  background-color: rgb(24,38,58);
+}
+
+.slider .handle {
+  position: relative;
+  width: 5vh;
+  height: 5vh;
+  left: 40vh;
+  box-shadow: inset 0 0 1px #54958A, inset 0 0 20px #465468;
+  background: rgba(44,58,78,0.8);
+}
+</style>
+
+
+<script>  
+    export default {
+      data: () => ({
+        xValue: 0,
+        yValue: 0,
+        initialXValue: 0,
+        initialYValue: 0
+      }),
+      oncreate() {
+        console.log(this);
+        this.set({
+          xValue: Math.floor(this.get().initialXValue),
+          yValue: Math.floor(this.get().initialYValue)
+        });
+      },
+      computed: { 
+        yRangeDistance({minYValue, maxYValue}) {
+          return maxYValue - minYValue;
+        },
+        xRangeDistance({minXValue, maxXValue}) {
+          return maxXValue - minXValue;
+        },
+        handleYPosition({yValue, minYValue, yRangeDistance}) {
+          return 100-((yValue - minYValue)/yRangeDistance*100)-2.5
+        },
+        handleXPosition({xValue, minXValue, xRangeDistance}) {
+          return ((xValue - minXValue)/xRangeDistance*100)-2.5
+        },
+        circular({shape}) {
+          return shape === "circular";
+        }
+      },
+      methods: {
+        sliderPosX(x) {
+          const offsetLeft = this.refs.slideArea.offsetLeft + this.refs.slideArea.offsetParent.offsetLeft;
+          let sliderMulti = (x-offsetLeft)/this.refs.slideArea.clientWidth
+          sliderMulti = sliderMulti < 1 ? sliderMulti : 1;
+          sliderMulti = sliderMulti > 0 ? sliderMulti : 0;  
+          return Math.floor(sliderMulti*this.get().xRangeDistance) + this.get().minXValue;
+        },
+        sliderPosY(y) {
+          let sliderMulti = 1-(y-this.refs.slideArea.offsetTop)/this.refs.slideArea.clientHeight
+          sliderMulti = sliderMulti < 1 ? sliderMulti : 1;
+          sliderMulti = sliderMulti > 0 ? sliderMulti : 0;  
+          return Math.floor(sliderMulti*this.get().yRangeDistance) + this.get().minYValue;
+        },
+        updateSelf(x,y){
+          if(y==0 || x==0) {return;}
+          this.set({
+            xValue: this.sliderPosX(x),
+            yValue: this.sliderPosY(y)
+          });
+        },
+        fireChange() {
+          const { key, xValue, yValue } = this.get();
+          this.fire('change', {key, xValue, yValue});
+        },
+        click({x,y}) {
+          this.updateSelf(x,y);
+          this.fireChange();
+        },
+        dragstart(e) {
+          e.dataTransfer.setDragImage(document.createElement('img'), 0, 0);
+        },
+        drag({x,y}) {
+          this.updateSelf(x,y);
+        },
+        dragend() {
+          this.fireChange();
+        }
+      }
+    }
+</script>

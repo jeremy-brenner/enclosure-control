@@ -1,9 +1,10 @@
 
 <div id=enclosure-control class='flex-horizontal'>
   <PowerBar/>
-  {#if $connectionState.current.state === 'Closed'}
+  {#if displayPrinterConnectionDialog}
     <PrinterConnectionDialog/>
-  {:else}
+  {/if}
+  {#if displayPrinterControls}
     <div class='center-column'>
       <svelte:component this="{dynamicComponents[$activePrinterButton]}"/>
     </div>
@@ -41,7 +42,12 @@
         PrinterConnectionDialog: './PrinterConnectionDialog.html',
     },
     computed: {
-
+      displayPrinterConnectionDialog({$connectionState}) {
+        return $connectionState.current.state === 'Closed';
+      },
+      displayPrinterControls({$connectionState}) {
+        return $connectionState.current.state && $connectionState.current.state !== 'Closed';
+      }
     }
   }
 </script>
