@@ -1,0 +1,12 @@
+<div class='file'>
+  <span>{name}</span>
+  <span class='button' on:click="$printFile(path)" >Print!</span>
+</div>
+
+<script>
+import store from './stores/AppDataStore.js';
+
+export default {
+  store: () => store,
+};
+</script>

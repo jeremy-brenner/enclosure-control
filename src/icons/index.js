@@ -9,6 +9,7 @@ import ToolTemperatureIcon from './ToolTemperatureIcon.html';
 import MoveIcon from './MoveIcon.html';
 import ThermometerIcon from './ThermometerIcon.html';
 import HomeIcon from './HomeIcon.html';
+import FolderIcon from './FolderIcon.html';
 
 export default {
   LightBulbIcon,
@@ -22,4 +23,5 @@ export default {
   MoveIcon,
   ThermometerIcon,
   HomeIcon,
+  FolderIcon,
 };

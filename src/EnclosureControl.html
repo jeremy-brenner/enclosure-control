@@ -5,7 +5,7 @@
     <PrinterConnectionDialog/>
   {/if}
   {#if displayPrinterControls}
-    <div class='center-column'>
+    <div class='center-column flex-vertical'>
       <svelte:component this="{dynamicComponents[$activePrinterButton]}"/>
     </div>
     <PrinterBar/>
@@ -27,19 +27,19 @@
   import JobInfo from './JobInfo.html';
   import MoveControls from './MoveControls.html';
   import TemperatureControls from './TemperatureControls.html';
-
+  import FileControls from './FileControls.html';
 
   export default {
     store: () => store,
     data: () => ({
       dynamicComponents: {
-        JobInfo, MoveControls, TemperatureControls
+        JobInfo, MoveControls, TemperatureControls, FileControls
       }
     }),
     components: { 
         PowerBar: './PowerBar.html', 
         PrinterBar: './PrinterBar.html',
-        PrinterConnectionDialog: './PrinterConnectionDialog.html',
+        PrinterConnectionDialog: './PrinterConnectionDialog.html'
     },
     computed: {
       displayPrinterConnectionDialog({$connectionState}) {

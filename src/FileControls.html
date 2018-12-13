@@ -1,0 +1,15 @@
+{#each $files.files as file}
+   <File name={file.name} path={file.path}/>
+{/each}
+
+<script>
+  import store from './stores/AppDataStore.js';
+
+  export default {
+    store: () => store,
+
+    components: { 
+      File: './File.html'
+    }
+  };
+</script>

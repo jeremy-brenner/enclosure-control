@@ -1,5 +1,7 @@
 import { Store } from 'svelte/store.js';
-import { getApiVersion, getConnectionState, getOutputStates, getPrinterState, setOutputState, connectToPrinter, setTemp, getJobState, getPrinterProfiles } from '../rest/OctoConnection.js';
+import { getApiVersion, getConnectionState, getFiles, printFile, getOutputStates, 
+  getPrinterState, setOutputState, connectToPrinter, setTemp, getJobState, 
+  getPrinterProfiles, loadFile, startJob, restartJob, pauseJob, cancelJob } from '../rest/OctoConnection.js';
 import { getConf, getAppMd5 } from '../rest/LocalConnection.js'
 
 class AppDataStore extends Store {
@@ -10,6 +12,10 @@ class AppDataStore extends Store {
   updateMd5() {
     return getAppMd5()
       .then(appMd5 => this.set({appMd5}));
+  }
+  updateFiles() {
+    return getFiles()
+      .then(files => this.set({files}));
   }
   updateApiVersion() {
     return getApiVersion()
@@ -38,6 +44,30 @@ class AppDataStore extends Store {
   setOutputState(id,state) {
     return setOutputState(id,state)
       .then(() => this.updateOutputStates());
+  }
+  printFile(name) {
+    return printFile(name)
+      .then(() => this.updateJobState());
+  }
+  loadFile(name) {
+    return loadFile(name)
+      .then(() => this.updateJobState());
+  }
+  startJob() {
+    return startJob()
+      .then(() => this.updateJobState());
+  }
+  restartJob() {
+    return restartJob()
+      .then(() => this.updateJobState());
+  }
+  cancelJob() {
+    return cancelJob()
+      .then(() => this.updateJobState());
+  }
+  pauseJob() {
+    return pauseJob()
+      .then(() => this.updateJobState());
   }
   killPower() {
     const killPromises = this.powerButtonIds().map( id => setOutputState(id,false));

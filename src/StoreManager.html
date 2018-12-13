@@ -11,6 +11,8 @@
     new Job('printerState', ['conf', 'connectionState', 'apiVersion'], () => store.updatePrinterState() ),
     new Job('jobState', ['conf', 'connectionState', 'apiVersion'], () => store.updateJobState() ),
     new Job('printerProfiles', ['conf', 'connectionState', 'apiVersion'], () => store.updatePrinterProfiles() ),
+    new Job('getFiles', ['conf', 'connectionState', 'apiVersion'], () => store.updateFiles() ),
+
   ];
 
 console.log(store);

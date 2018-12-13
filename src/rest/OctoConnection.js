@@ -65,6 +65,42 @@ function getOutputStates() {
   return apiGet('/plugin/enclosure/getOutputStatus');
 }
 
+function getFiles() {
+  return apiGet('/api/files');
+}
+
+function startJob() {
+  return apiPost('/api/control/job', {command: 'start'});
+}
+
+function cancelJob() {
+  return apiPost('/api/control/job', {command: 'cancel'});
+}
+
+function pauseJob() {
+  return apiPost('/api/control/job', {command: 'pause'});
+}
+
+function restartJob() {
+  return apiPost('/api/control/job', {command: 'restart'});
+}
+
+function printFile(name) {
+  return apiPost(`/api/files/local/${name}`, 
+    {
+      "command": "select",
+      "print": true
+    });
+}
+
+function loadFile(name) {
+  return apiPost(`/api/files/local/${name}`, 
+    {
+      "command": "select",
+      "print": false
+    });
+}
+
 function setOutputState(id,state) {
   return apiGet(`/plugin/enclosure/setIO?status=${state}&index_id=${id}`);
 }
@@ -105,5 +141,12 @@ export {
   getOutputStates,
   setOutputState,
   getJobState,
-  getPrinterProfiles
+  getPrinterProfiles,
+  getFiles,
+  printFile,
+  loadFile,
+  startJob,
+  pauseJob,
+  restartJob,
+  cancelJob
 };
