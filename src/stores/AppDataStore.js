@@ -3,6 +3,7 @@ import { getApiVersion, getConnectionState, getFiles, printFile, getOutputStates
   getPrinterState, setOutputState, connectToPrinter, setTemp, getJobState, 
   getPrinterProfiles, loadFile, startJob, restartJob, pauseJob, cancelJob } from '../rest/OctoConnection.js';
 import { getConf, getAppMd5 } from '../rest/LocalConnection.js'
+import loadSlices from '../helpers/LoadSlices.js';
 
 class AppDataStore extends Store {
   updateConf() {
@@ -85,6 +86,10 @@ class AppDataStore extends Store {
     return setTemp(key,temp)
       .then(() => this.updatePrinterState() );
   }
+  updateAnimationSlices() {
+    return loadSlices(this.get().conf.animationGeometryName)
+      .then(animationSlices => this.set({animationSlices}));
+  }
 }
 
 const defaults = {
@@ -125,7 +130,7 @@ const defaults = {
       }
     },
     progress: {
-
+      completion: 0
     }
   },
   printerProfiles: {

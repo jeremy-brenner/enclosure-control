@@ -12,10 +12,18 @@
     new Job('jobState', ['conf', 'connectionState', 'apiVersion'], () => store.updateJobState() ),
     new Job('printerProfiles', ['conf', 'connectionState', 'apiVersion'], () => store.updatePrinterProfiles() ),
     new Job('getFiles', ['conf', 'connectionState', 'apiVersion'], () => store.updateFiles() ),
+    new Job('getAnimationSlices', ['conf'], () => {
+      const slices = store.get().animationSlices;
+      if(!slices || slices.length < 100 ) {
+        return store.updateAnimationSlices();
+      }else{
+        return Promise.resolve();
+      }
+    })
 
   ];
 
-console.log(store);
+  console.log(store);
   export default {
     data: () => ({
       jobs

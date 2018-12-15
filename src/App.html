@@ -1,18 +1,22 @@
 
 <EnclosureControl/>
-<Background/>
+<Animation/>
 <TemperatureChart/> 
 <StoreManager/>
-<AppReloader/>
+<AppReloader/> 
 
 <script>
+  import store from './stores/AppDataStore.js'
+
   export default {
+    store: () => store,
     components: { 
         EnclosureControl: './EnclosureControl.html', 
-        Background: './Background.html',
+        // Background: './Background.html',
         TemperatureChart: './TemperatureChart.html',
         AppReloader: './AppReloader.html',
-        StoreManager: './StoreManager.html'
+        StoreManager: './StoreManager.html',
+        Animation: './Animation.html'
     }
   }
 </script>

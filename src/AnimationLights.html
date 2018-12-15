@@ -1,0 +1,23 @@
+<script>
+    export default {
+      data: () => ({}),
+      oncreate() {
+        const group = this.get().group;
+        var lights = [];
+        lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        lights[ 3 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+
+        lights[ 0 ].position.set( 0, 200, 0 );
+        lights[ 1 ].position.set( 20, 150, 100 );
+        lights[ 2 ].position.set( 100, 200, 100 );
+        lights[ 3 ].position.set( 0, 20, 70 );
+
+        group.add( lights[ 0 ] );
+   //     group.add( lights[ 1 ] );
+        group.add( lights[ 2 ] );
+        group.add( lights[ 3 ] );
+      }
+    }
+  </script>

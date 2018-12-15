@@ -36,7 +36,9 @@ export default {
 			}
 		},
 		copy(
-			[{ files: 'src/static/*.*', dest: 'public' }], { verbose: true, watch: !production }
+			[
+				{ files: 'src/static/*.*', dest: 'public' }
+			], { verbose: true, watch: !production }
 		),
 		production && terser()
 	]

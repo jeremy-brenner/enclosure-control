@@ -1,0 +1,44 @@
+<script>
+
+  const blueSolid = new THREE.MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, flatShading: true } );
+  const blueTrans = new THREE.MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, opacity: 0.05, transparent: true, flatShading: true } );
+  const redSolid = new THREE.MeshPhongMaterial( { color: 0x891528, emissive: 0x072534, flatShading: true } );
+
+  const layerMaterial = (i,c) => {
+    if(i<c) {
+      return blueSolid;
+    }
+    if(i==c) {
+      return redSolid;
+    }
+    if(i>c) {
+      return blueTrans;
+    }
+  }
+
+  export default {
+    data: () => ({}),
+    methods: {
+      currentLayer() {
+        return Math.floor(this.get().showPercentage);
+      },
+      setMaterial() {
+        const group = this.get().group;
+        const currentLayer = this.currentLayer();
+        group.children.forEach( (child,i) => {
+          child.material = layerMaterial(i,currentLayer);
+        });
+      }
+    },
+    onstate() {
+      this.setMaterial();
+    },
+    oncreate() {
+      const group = this.get().group;
+      // group.rotation.x = -1;
+      this.get().slices
+        .map( slice => new THREE.Mesh( slice, blueSolid ) )
+        .forEach( slice => group.add(slice) );
+    }
+  }
+</script>

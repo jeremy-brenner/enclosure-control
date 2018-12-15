@@ -1,0 +1,65 @@
+<canvas id='animation'></canvas>
+<AnimationLights group={lightGroup} />
+{#if $animationSlices}
+  <AnimationSlices slices={$animationSlices} group={sliceGroup} showPercentage={$jobState.progress.completion} />
+{/if}
+
+<style>
+  #animation {
+    top: 0;
+    z-index: -50;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+  }
+</style>
+
+<script>
+  import store from './stores/AppDataStore.js';
+
+  export default {
+    store: () => store,
+    data: () => ({
+      scene: new THREE.Scene(),
+      sliceGroup: new THREE.Group(),
+      lightGroup: new THREE.Group(),
+    }),
+    components: { 
+      AnimationSlices: './AnimationSlices.html',
+      AnimationLights: './AnimationLights.html',
+    },
+    oncreate() {
+          const { scene, lightGroup, sliceGroup } = this.get();
+          const camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+          const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.getElementById('animation'),
+            alpha: true,
+            antialias: true
+          });
+          renderer.setSize( window.innerWidth, window.innerHeight );
+
+          const box = new THREE.BoxGeometry( 100,100,100 );
+          const geo = new THREE.EdgesGeometry( box ); 
+          const mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 2 } );
+          const wireframe = new THREE.LineSegments( geo, mat );
+       
+          const objectGroup = new THREE.Group();
+          objectGroup.add(wireframe);
+          objectGroup.add(sliceGroup);
+          scene.add(objectGroup);
+          scene.add(lightGroup);
+
+    
+          objectGroup.rotation.x = -1;
+          camera.position.set( 0, -10, 110 );
+
+          const animate = (t) => {
+            requestAnimationFrame( animate );
+            objectGroup.rotation.z = t/5000;
+            renderer.render( scene, camera );
+          };
+
+          animate();
+    } 
+  }
+</script>
