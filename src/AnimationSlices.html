@@ -1,8 +1,10 @@
 <script>
 
-  const blueSolid = new THREE.MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, flatShading: true } );
-  const blueTrans = new THREE.MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, opacity: 0.05, transparent: true, flatShading: true } );
-  const redSolid = new THREE.MeshPhongMaterial( { color: 0x891528, emissive: 0x072534, flatShading: true } );
+  import { MeshPhongMaterial, Mesh } from 'three';
+ 
+  const blueSolid = new MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, flatShading: true } );
+  const blueTrans = new MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, opacity: 0.05, transparent: true, flatShading: true } );
+  const redSolid = new MeshPhongMaterial( { color: 0x891528, emissive: 0x072534, flatShading: true } );
 
   const layerMaterial = (i,c) => {
     if(i<c) {
@@ -37,7 +39,7 @@
       const group = this.get().group;
       // group.rotation.x = -1;
       this.get().slices
-        .map( slice => new THREE.Mesh( slice, blueSolid ) )
+        .map( slice => new Mesh( slice, blueSolid ) )
         .forEach( slice => group.add(slice) );
     }
   }

@@ -27,6 +27,8 @@
     "@jscad/stl-serializer": "^0.2.0"
   },
   "dependencies": {
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "three": "^0.99.0",
+    "three-stl-loader": "^1.0.6"
   }
 }
