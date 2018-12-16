@@ -14,7 +14,7 @@ const slice = (file,outDir) => {
 
   console.log('Slicing...');
 
-  const baseName = file.replace('.stl','');
+  const baseName = file.replace('.stl','').split('/').pop();
 
   const rawData = fs.readFileSync(file);
   const inputCsg = stlDeSerializer.deserialize(rawData, undefined, {output: 'csg'}).center([true,true,true]);
