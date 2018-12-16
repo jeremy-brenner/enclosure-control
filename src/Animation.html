@@ -39,13 +39,7 @@
           });
           renderer.setSize( window.innerWidth, window.innerHeight );
 
-          const box = new BoxGeometry( 100,100,100 );
-          const geo = new EdgesGeometry( box ); 
-          const mat = new LineBasicMaterial( { color: 0xffffff, linewidth: 2 } );
-          const wireframe = new LineSegments( geo, mat );
-       
           const objectGroup = new Group();
-          objectGroup.add(wireframe);
           objectGroup.add(sliceGroup);
           scene.add(objectGroup);
           scene.add(lightGroup);
@@ -55,7 +49,7 @@
 
           const animate = (t) => {
             requestAnimationFrame( animate );
-            objectGroup.rotation.z = t/5000;
+            objectGroup.rotation.z = t/10000;
             renderer.render( scene, camera );
           };
 
