@@ -40,11 +40,10 @@ const slice = (file,outDir) => {
     corner1: [bounds[1].x, bounds[1].y, bounds[0].z + sliceThickness*i + sliceThickness]
   }).intersect(scaledCsg);
 
-
   const promises = numberArray(sliceCount)
     .map( i => {
       const filename = `${outDir}/${baseName}-${i.toString().padStart(2, '0')}.stl`;
-      console.log(`Writing ${filename}`);
+      console.log(`Slicing ${filename}`);
       const stl = stlSerializer.serialize(cubeSlice(i), {binary: false});
       return saveFile(filename, stl);
     })
@@ -53,9 +52,12 @@ const slice = (file,outDir) => {
 }
 
 function saveFile(filename, data) {
+  console.log(`Saving ${filename}`);
   return new Promise( (resolve,reject) => {
     fs.writeFile( filename, data, (err) => err ? reject(err): resolve());
-  });
+  })
+  .then(() => console.log(`Saved ${filename}`))
+  .catch((err) => console.error(`Problem saving ${filename}: ${err}`));
 }
 
 function numberArray(count) {
