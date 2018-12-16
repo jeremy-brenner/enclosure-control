@@ -5,21 +5,28 @@ class Job {
     this.exec = exec;
     this.lastRun = 0;
     this.status = 'Unknown'
+    this.running = false;
   }
   run() {
-    this.lastRun = Date.now();
+    this.running = true;
     return this.exec()
-      .then( () => this.status = 'Ok')
+      .then( () => {
+        this.status = 'Ok'
+      })
       .catch( (e) => { 
         this.status = 'Error';
         this.lastError = e;
+      })
+      .then(() => {
+        this.running = false;
+        this.lastRun = Date.now();
       });
   }
   timeSinceRun() {
     return Date.now() - this.lastRun 
   }
   canRun(okJobIds) {
-    if( this.timeSinceRun() < 5000 ) {
+    if( this.running || this.timeSinceRun() < 5000 ) {
       return false;
     }
     return this.dependsOn.filter( id => !okJobIds.includes(id) ).length == 0;
