@@ -87,8 +87,13 @@ class AppDataStore extends Store {
       .then(() => this.updatePrinterState() );
   }
   updateAnimationSlices() {
-    return loadSlices(this.get().conf.animationGeometryName)
+    const animationGeometryName = this.get().conf.animationGeometryName;
+    if(!animationGeometryName) {
+      return Promise.reject('animationGeometryName is not set');
+    }
+    return loadSlices(animationGeometryName)
       .then(animationSlices => this.set({animationSlices}));
+    
   }
 }
 
