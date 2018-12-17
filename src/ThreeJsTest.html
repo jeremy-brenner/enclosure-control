@@ -1,0 +1,63 @@
+<canvas id='animation' width="800" height="480"></canvas>
+
+<style>
+  #animation {
+    top: 0;
+    z-index: -50;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+  }
+</style>
+    
+
+<script>
+  import * as THREE from 'three';
+  import almostStlLoader from 'three-stl-loader';
+
+const STLLoader = almostStlLoader(THREE);
+const loader = new STLLoader();
+
+
+  export default {
+
+
+oncreate() {
+ 
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('animation') });
+renderer.setSize( window.innerWidth, window.innerHeight );
+var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+var cube = new THREE.Mesh( geometry, material );
+
+var group = new THREE.Group();
+//group.add(cube);
+
+scene.add(group);
+
+ 
+
+    loader.load( 'cuteocto.stl', geometry => {
+        var octo = new THREE.Mesh( geometry, material );
+      group.add(octo);
+    });
+
+
+          camera.position.set( 0, -10, 110 );
+
+//camera.position.z = 5;
+function animate() {
+    group.rotation.x += 0.01;
+group.rotation.y += 0.01;
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+}
+animate();
+
+}
+}
+
+</script>
