@@ -28,7 +28,8 @@
         const group = this.get().group;
         const currentLayer = this.currentLayer();
         group.children.forEach( (child,i) => {
-          child.material = layerMaterial(i,currentLayer);
+          // child.material = layerMaterial(i,currentLayer);
+          child.visible = i == currentLayer;
         });
       }
     },
