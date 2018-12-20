@@ -28,8 +28,7 @@
         const group = this.get().group;
         const currentLayer = this.currentLayer();
         group.children.forEach( (child,i) => {
-          // child.material = layerMaterial(i,currentLayer);
-          child.visible = i == currentLayer;
+          child.visible = (i == currentLayer);
         });
       }
     },
@@ -39,8 +38,11 @@
     oncreate() {
       const group = this.get().group;
       this.get().slices
-        .map( slice => new Mesh( slice, blueSolid ) )
-        .forEach( slice => group.add(slice) );
+        .forEach( (slice,i) => {
+          const mesh = new Mesh( slice, blueSolid );
+          mesh.visible = i==99;
+          group.add(mesh);
+        });
     }
   }
 </script>
