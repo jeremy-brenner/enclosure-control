@@ -1,8 +1,8 @@
 <script>
 
-  import { MeshPhongMaterial, Mesh } from 'three';
+  import { MeshBasicMaterial, Mesh } from 'three';
  
-  const blueSolid = new MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, flatShading: true } );
+  const blueSolid = new MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, flatShading: true } )
   const blueTrans = new MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, opacity: 0.05, transparent: true, flatShading: true } );
   const redSolid = new MeshPhongMaterial( { color: 0x891528, emissive: 0x072534, flatShading: true } );
 
@@ -28,7 +28,8 @@
         const group = this.get().group;
         const currentLayer = this.currentLayer();
         group.children.forEach( (child,i) => {
-          child.material = layerMaterial(i,currentLayer);
+          child.visible = i == currentLayer;
+      //    child.material = layerMaterial(i,currentLayer);
         });
       }
     },

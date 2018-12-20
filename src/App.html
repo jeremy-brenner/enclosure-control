@@ -1,8 +1,8 @@
-<ThreeJsTest/>
-<!-- <EnclosureControl/> -->
-<!-- <TemperatureChart/>  -->
-<!-- <StoreManager/> -->
-<!-- <AppReloader/>  -->
+<Animation/>
+<EnclosureControl/>
+<TemperatureChart/> 
+<StoreManager/>
+<AppReloader/> 
 
 <script>
   import store from './stores/AppDataStore.js'
@@ -10,13 +10,14 @@
   export default {
     store: () => store,
     components: { 
-        // EnclosureControl: './EnclosureControl.html', 
+        EnclosureControl: './EnclosureControl.html', 
         // Background: './Background.html',
-        // TemperatureChart: './TemperatureChart.html',
-        // AppReloader: './AppReloader.html',
-        // StoreManager: './StoreManager.html',
+        TemperatureChart: './TemperatureChart.html',
+        AppReloader: './AppReloader.html',
+        StoreManager: './StoreManager.html',
+        //  Animation: './Animation.html',
         // GlAnimation: './GlAnimation.html'
-        ThreeJsTest: './ThreeJsTest.html'
+         Animation: './ThreeJsTest.html'
     }
   }
 </script>

@@ -19,6 +19,31 @@ const STLLoader = almostStlLoader(THREE);
 const loader = new STLLoader();
 
 
+const LoadSlices = (name) => {
+  return Promise.all(fileNames(name).map(loadSlice));
+}
+
+function loadSlice({file,name}) {
+  return new Promise( resolve =>  {
+    loader.load( file, geometry => {
+      geometry.name = name;
+      resolve(geometry);
+    })
+   });
+  
+} 
+
+function fileNames(name) {
+  return paddedNumbers(100)
+    .map( n => ({ file: `slices/${name}-${n}.stl`, name: `${name}-${n}`}))
+}
+
+function paddedNumbers(count) {
+  return [...Array(count).keys()].map( i => `${i}`.padStart(2, '0'));
+}
+
+
+
   export default {
 
 
@@ -27,31 +52,67 @@ oncreate() {
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('animation') });
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('animation'),             alpha: true,
+            antialias: true });
 renderer.setSize( window.innerWidth, window.innerHeight );
 var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-var cube = new THREE.Mesh( geometry, material );
+// var material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
+const material = new THREE.MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, flatShading: true } );
+  const blueTrans = new THREE.MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, opacity: 0.05, transparent: true, flatShading: true } );
 
-var group = new THREE.Group();
-//group.add(cube);
+const light = new THREE.PointLight( 0xffffff, 1, 0 );
+            light.position.set(0,0,200);
+            scene.add(light);
 
-scene.add(group);
 
- 
 
-    loader.load( 'cuteocto.stl', geometry => {
-        var octo = new THREE.Mesh( geometry, material );
-      group.add(octo);
-    });
+var group1 = new THREE.Group();
+var group2 = new THREE.Group();
+var group3 = new THREE.Group();
+
+scene.add(group1);
+scene.add(group2);
+scene.add(group3);
+
+     LoadSlices('cutedragon').then((slices) => {
+       slices.forEach( (geometry,i) => {
+    
+       var octo = new THREE.Mesh( geometry, material );
+       
+       octo.visible = (i == 60 );
+    
+       group1.add(octo);
+      
+      });
+
+      });
+
+    // loader.load( 'cutedragon-00.stl', geometry => {
+    //     var octo1 = new THREE.Mesh( geometry, material );
+    //     octo1.position.x = -75;
+    //     var octo2 = new THREE.Mesh( geometry, material );
+    //     var octo3 = new THREE.Mesh( geometry, material );
+    //     octo3.position.x = 75;
+
+    //   group1.add(octo1);
+    //   group2.add(octo2);
+    //   group3.add(octo3);
+    // }); 
 
 
           camera.position.set( 0, -10, 110 );
 
 //camera.position.z = 5;
 function animate() {
-    group.rotation.x += 0.01;
-group.rotation.y += 0.01;
+    group1.rotation.x += 0.01;
+group1.rotation.y += 0.01;
+
+group2.rotation.x += 0.02;
+group2.rotation.y += 0.01;
+
+    group3.rotation.x += 0.01;
+group3.rotation.y += 0.02;
+
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
 }
