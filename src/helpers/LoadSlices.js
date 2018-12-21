@@ -20,7 +20,7 @@ function loadSlice({file,name}) {
 
 function fileNames(name) {
   return paddedNumbers(100)
-    .flatMap( n => {
+    .map( n => {
       if(n==="100") {
         return [
           { 
@@ -39,7 +39,7 @@ function fileNames(name) {
           name: `${n}-bottom`
         }
       ];
-    });
+    }).reduce((acc, a) => acc.concat(a), []);
 }
 
 function paddedNumbers(count) {
