@@ -2,7 +2,6 @@ const slicer = require('./slice');
 const fs = require('fs');
 const stlDeSerializer = require('@jscad/stl-deserializer');
 const stlSerializer = require('@jscad/stl-serializer');
-const { CSG } = require('@jscad/csg');
 
 const file = process.argv[2];
 const outDir = process.argv[3];
@@ -18,21 +17,28 @@ const inputCsg = stlDeSerializer.deserialize(rawData, undefined, {output: 'csg'}
 
 console.log('Slicing...');
 
-const slice = slicer(inputCsg,100);
+const slices = 100;
+const slice = slicer(inputCsg,slices);
 
-numbers(100)
-  .reduce( (p,i) => {
+const manifest = {
+  files: []
+}
+
+numbers(slices+2)
+  .reduce( (p,num) => {
     return p.then( () => {
-      const num = i+1;
-      const filebase = `${outDir}/${baseName}-${num.toString().padStart(2, '0')}`;
+      const filebase = `${baseName}-${num.toString().padStart(2, '0')}`;
       const parts = slice(num);
       const promises = Object.keys(parts).map( key => {
         const stl = stlSerializer.serialize( parts[key], {binary: true});
-        return saveFile(`${filebase}-${key}.stl`, stl );
+        const filename = `${filebase}-${key}.stl`;
+        manifest.files.push(filename);
+        return saveFile( `${outDir}/${filename}`, stl );
       })
       return Promise.all(promises);
     });
   }, Promise.resolve())
+  .then(() => saveFile(`${outDir}/${baseName}.json`,[JSON.stringify(manifest)]) )
   .then(() => console.log('Done!'))
   .catch(e => console.error(e));
 

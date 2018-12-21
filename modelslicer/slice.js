@@ -21,15 +21,30 @@ const slice = (inputCsg, sliceCount) => {
   const sliceThickness = box.z/sliceCount;
 
   return (i) => {
-    if( i === sliceCount ) {
-      return { full: scaledCsg };
+    const objects = {};
+    
+    if( i > 1 ) {
+      objects.completed = CSG.cube({
+        corner1: [bounds[0].x, bounds[0].y, bounds[0].z],
+        corner2: [bounds[1].x, bounds[1].y, bounds[0].z + sliceThickness*(i-1)]
+      }).intersect(scaledCsg);
     }
-    const bottom = CSG.cube({
-      corner1: [bounds[0].x, bounds[0].y, bounds[0].z ],
-      corner2: [bounds[1].x, bounds[1].y, bounds[0].z + sliceThickness*i]
-    }).intersect(scaledCsg);
-    const top = scaledCsg.subtract(bottom);
-    return { bottom, top };
+    
+    if( i > 0 && i < sliceCount ) {
+      objects.current = CSG.cube({
+        corner1: [bounds[0].x, bounds[0].y, bounds[0].z + sliceThickness*(i-1)],
+        corner2: [bounds[1].x, bounds[1].y, bounds[0].z + sliceThickness*i]
+      }).intersect(scaledCsg);
+    }
+
+    if( i < sliceCount ) {
+      objects.remaining = CSG.cube({
+        corner1: [bounds[0].x, bounds[0].y, bounds[0].z + sliceThickness*i],
+        corner2: [bounds[1].x, bounds[1].y, bounds[1].z]
+      }).intersect(scaledCsg);
+    }
+    
+    return objects;
   }
 
 }
