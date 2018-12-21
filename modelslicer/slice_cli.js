@@ -23,12 +23,18 @@ const slice = slicer(inputCsg,100);
 numbers(100)
   .reduce( (p,i) => {
     return p.then( () => {
-      const filename = `${outDir}/${baseName}-${i.toString().padStart(2, '0')}.stl`;
-      const stl = stlSerializer.serialize( slice(i), {binary: true});
-      return saveFile(filename, stl)
+      const num = i+1;
+      const filebase = `${outDir}/${baseName}-${num.toString().padStart(2, '0')}`;
+      const parts = slice(num);
+      const promises = Object.keys(parts).map( key => {
+        const stl = stlSerializer.serialize( parts[key], {binary: true});
+        return saveFile(`${filebase}-${key}.stl`, stl );
+      })
+      return Promise.all(promises);
     });
   }, Promise.resolve())
-  .then(() => console.log('Done!'));
+  .then(() => console.log('Done!'))
+  .catch(e => console.error(e));
 
 
 function saveFile(filename, data) {

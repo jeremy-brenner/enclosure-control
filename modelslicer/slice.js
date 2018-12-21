@@ -21,11 +21,15 @@ const slice = (inputCsg, sliceCount) => {
   const sliceThickness = box.z/sliceCount;
 
   return (i) => {
-    console.log(`Slice ${i}`);
-    return CSG.cube({
+    if( i === sliceCount ) {
+      return { full: scaledCsg };
+    }
+    const bottom = CSG.cube({
       corner1: [bounds[0].x, bounds[0].y, bounds[0].z ],
-      corner2: [bounds[1].x, bounds[1].y, bounds[0].z + sliceThickness*i + sliceThickness]
+      corner2: [bounds[1].x, bounds[1].y, bounds[0].z + sliceThickness*i]
     }).intersect(scaledCsg);
+    const top = scaledCsg.subtract(bottom);
+    return { bottom, top };
   }
 
 }
