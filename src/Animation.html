@@ -35,7 +35,7 @@
       const renderer = new WebGLRenderer({ 
         canvas: document.getElementById('animation'),
         alpha: true,
-        antialias: true
+        antialias: store.get().glAntialiasing
       });
       renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -46,6 +46,7 @@
 
       objectGroup.rotation.x = -1;
       camera.position.set( 0, -10, 110 );
+       
 
       const animate = (t) => {
         requestAnimationFrame( animate );
