@@ -1,49 +1,23 @@
 import * as THREE from 'three';
 import almostStlLoader from 'three-stl-loader';
+import { getSliceManifest } from '../rest/LocalConnection';
 
 const STLLoader = almostStlLoader(THREE);
 const loader = new STLLoader();
 
 const LoadSlices = (name) => {
-  return Promise.all(fileNames(name).map(loadSlice));
+  return getSliceManifest(name)
+    .then( ({files}) => Promise.all(files.map(loadSlice)) );
 }
 
-function loadSlice({file,name}) {
+function loadSlice(file) {
   return new Promise( resolve =>  {
-    loader.load( file, geometry => {
-      geometry.name = name;
+    loader.load( `slices/${file}`, geometry => {
+      geometry.name = file.replace('.stl','').split('-').slice(1).join('-');
       resolve(geometry);
     })
    });
   
 } 
-
-function fileNames(name) {
-  return paddedNumbers(100)
-    .map( n => {
-      if(n==="100") {
-        return [
-          { 
-            file: `slices/${name}-${n}-full.stl`, 
-            name: `${n}-full`
-          }
-        ];
-      }
-      return [
-        { 
-          file: `slices/${name}-${n}-top.stl`, 
-          name: `${n}-top`
-        },
-        { 
-          file: `slices/${name}-${n}-bottom.stl`, 
-          name: `${n}-bottom`
-        }
-      ];
-    }).reduce((acc, a) => acc.concat(a), []);
-}
-
-function paddedNumbers(count) {
-  return [...Array(count).keys()].map( i => `${i+1}`.padStart(2, '0'));
-}
 
 export default LoadSlices;

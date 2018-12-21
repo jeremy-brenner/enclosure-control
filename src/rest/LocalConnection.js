@@ -9,4 +9,9 @@ function getAppMd5() {
     .then(res => res.json());
 }
 
-export { getConf, getAppMd5 }
+function getSliceManifest(name) {
+  return fetch(`/slices/${name}.json`)
+    .then(res => res.json());
+}
+
+export { getConf, getAppMd5, getSliceManifest }

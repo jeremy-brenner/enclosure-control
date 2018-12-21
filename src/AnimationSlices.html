@@ -2,15 +2,17 @@
 
   import { MeshPhongMaterial, Mesh } from 'three';
  
-  const blueSolid = new MeshPhongMaterial( { color: 0x156289, flatShading: true } );
-  const blueTrans = new MeshPhongMaterial( { color: 0x156289, opacity: 0.05, transparent: true, flatShading: true } );
-  const redSolid = new MeshPhongMaterial( { color: 0x891528, flatShading: true } );
+  const materials = {
+    completed: new MeshPhongMaterial( { color: 0x156289, flatShading: true } ),
+    current: new MeshPhongMaterial( { color: 0x891528, flatShading: true } ),
+    remaining: new MeshPhongMaterial( { color: 0x156289, flatShading: true, transparent: true, opacity: 0.5 } ),
+}
 
   export default {
     data: () => ({}),
     methods: {
       currentLayer() {
-        return Math.floor(this.get().showPercentage || 50);
+        return Math.floor(this.get().showPercentage);
       },
       updateSlices() {
         const group = this.get().group;
@@ -21,7 +23,7 @@
               current.geometry = geometry;
             }else{
               const [ num, key ] = geometry.name.split('-');
-              const mesh = new Mesh( geometry, key == 'bottom' ? blueSolid: redSolid );
+              const mesh = new Mesh( geometry, materials[key] );
               mesh.name = geometry.name;
               mesh.visible = false;
               group.add(mesh);
@@ -38,13 +40,10 @@
           }else{
             mesh.visible = false;
           }
-          
-
         });
       }
     },
     onstate({changed}) {
-      console.log({changed});
       if(changed.slices === true) {
         this.updateSlices();
       }
@@ -53,11 +52,8 @@
       }
     },
     oncreate() {
-      console.log('create');
       this.updateSlices();
-      console.log('update done');
       this.updateVisibility();
-      console.log('vis done')
     }
   }
 </script>
