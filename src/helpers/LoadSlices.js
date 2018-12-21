@@ -20,11 +20,30 @@ function loadSlice({file,name}) {
 
 function fileNames(name) {
   return paddedNumbers(100)
-    .map( n => ({ file: `slices/${name}-${n}.stl`, name: `${name}-${n}`}))
+    .flatMap( n => {
+      if(n==="100") {
+        return [
+          { 
+            file: `slices/${name}-${n}-full.stl`, 
+            name: `${n}-full`
+          }
+        ];
+      }
+      return [
+        { 
+          file: `slices/${name}-${n}-top.stl`, 
+          name: `${n}-top`
+        },
+        { 
+          file: `slices/${name}-${n}-bottom.stl`, 
+          name: `${n}-bottom`
+        }
+      ];
+    });
 }
 
 function paddedNumbers(count) {
-  return [...Array(count).keys()].map( i => `${i}`.padStart(2, '0'));
+  return [...Array(count).keys()].map( i => `${i+1}`.padStart(2, '0'));
 }
 
 export default LoadSlices;

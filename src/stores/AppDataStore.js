@@ -92,7 +92,7 @@ class AppDataStore extends Store {
       return Promise.reject('animationGeometryName is not set');
     }
     return loadSlices(animationGeometryName)
-      .then(animationSlices => this.set({animationSlices}));
+      .then(animationSlices => this.set({animationSlices, animationGeometryName}));
     
   }
 }

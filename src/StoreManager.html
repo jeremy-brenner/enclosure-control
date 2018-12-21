@@ -14,7 +14,8 @@
     new Job('getFiles', ['conf', 'connectionState', 'apiVersion'], () => store.updateFiles() ),
     new Job('getAnimationSlices', ['conf'], () => {
       const slices = store.get().animationSlices;
-      if(!slices || slices.length < 100 ) {
+      const newName = store.get().animationGeometryName != store.get().conf.animationGeometryName;
+      if(!slices || slices.length < 100 || newName ) {
         return store.updateAnimationSlices();
       }else{
         return Promise.resolve();

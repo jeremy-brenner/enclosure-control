@@ -6,43 +6,58 @@
   const blueTrans = new MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, opacity: 0.05, transparent: true, flatShading: true } );
   const redSolid = new MeshPhongMaterial( { color: 0x891528, emissive: 0x072534, flatShading: true } );
 
-  const layerMaterial = (i,c) => {
-    if(i<c) {
-      return blueSolid;
-    }
-    if(i==c) {
-      return redSolid;
-    }
-    if(i>c) {
-      return blueTrans;
-    }
-  }
-
   export default {
     data: () => ({}),
     methods: {
       currentLayer() {
-        return Math.floor(this.get().showPercentage);
+        return Math.floor(this.get().showPercentage || 50);
       },
-      setMaterial() {
+      updateSlices() {
         const group = this.get().group;
-        const currentLayer = this.currentLayer();
-        group.children.forEach( (child,i) => {
-          child.visible = (i == currentLayer);
+        this.get().slices
+          .forEach( (geometry,i) => {
+            const current = group.getObjectByName(geometry.name);
+            if(current) {
+              current.geometry = geometry;
+            }else{
+              const [ num, key ] = geometry.name.split('-');
+              const mesh = new Mesh( geometry, key == 'bottom' ? blueSolid: redSolid );
+              mesh.name = geometry.name;
+              mesh.visible = false;
+              group.add(mesh);
+            }
+          });
+      },
+      updateVisibility() {
+        const current = this.currentLayer();
+        this.get().group.children.forEach( (mesh) => {
+          const [ num, key ] = mesh.name.split('-');
+          const i = parseInt(num);
+          if(i == current) {
+            mesh.visible = true;
+          }else{
+            mesh.visible = false;
+          }
+          
+
         });
       }
     },
-    onstate() {
-      this.setMaterial();
+    onstate({changed}) {
+      console.log({changed});
+      if(changed.slices === true) {
+        this.updateSlices();
+      }
+      if(changed.showPercentage === true || changed.slices === true){
+        this.updateVisibility();
+      }
     },
     oncreate() {
-      const group = this.get().group;
-      this.get().slices
-        .forEach( (slice,i) => {
-          const mesh = new Mesh( slice, blueSolid );
-          mesh.visible = i==99;
-          group.add(mesh);
-        });
+      console.log('create');
+      this.updateSlices();
+      console.log('update done');
+      this.updateVisibility();
+      console.log('vis done')
     }
   }
 </script>
